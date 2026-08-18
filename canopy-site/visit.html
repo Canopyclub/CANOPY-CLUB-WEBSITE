@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visit Us | The Canopy Club</title>
+<meta name="description" content="Visit The Canopy Club at 5 Mill Creek Road, Port Jefferson, NY. Open daily 8am–4pm.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="wordmark"><img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark">The Canopy Club</a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Café Menu</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="visit.html" class="active">Visit Us</a>
+    </nav>
+    <a href="visit.html#reserve" class="nav-cta">Visit Port Jeff</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <p class="eyebrow">Find Us</p>
+      <h1>5 Mill Creek Road, Port Jefferson.</h1>
+      <p class="lede">Open daily for coffee and café hours, with a Thursday&ndash;Saturday wine bar coming online after our dinner program launches.</p>
+    </div>
+    <img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark" class="hero-mark" style="max-width:220px;">
+  </div>
+</section>
+
+<section id="reserve">
+  <div class="container grid-2">
+    <div>
+      <h2 style="color:var(--forest); font-size:1.7rem;">Hours</h2>
+      <p><strong>Café</strong> &mdash; Mon&ndash;Sun, 8am&ndash;4pm</p>
+      <p><strong>Wine Bar</strong> &mdash; Thu&ndash;Sat evenings, launching after our liquor license clears</p>
+      <h2 style="color:var(--forest); font-size:1.7rem; margin-top:40px;">Address</h2>
+      <p>5 Mill Creek Road<br>Port Jefferson, NY</p>
+      <h2 style="color:var(--forest); font-size:1.7rem; margin-top:40px;">Book Catering or Lil' Pigs</h2>
+      <p>Use the form and let us know which service you're after &mdash; catering, the cart, or a Club Key question.</p>
+    </div>
+    <div class="card">
+      <h3>Get in touch</h3>
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-weight:700; margin-bottom:6px; font-size:.85rem;">Name</label>
+          <input type="text" name="name" required style="width:100%; padding:10px; border:1.5px solid var(--blush-deep); border-radius:6px; font-family:var(--font-body);">
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-weight:700; margin-bottom:6px; font-size:.85rem;">Email</label>
+          <input type="email" name="email" required style="width:100%; padding:10px; border:1.5px solid var(--blush-deep); border-radius:6px; font-family:var(--font-body);">
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-weight:700; margin-bottom:6px; font-size:.85rem;">I'm interested in</label>
+          <select name="interest" style="width:100%; padding:10px; border:1.5px solid var(--blush-deep); border-radius:6px; font-family:var(--font-body);">
+            <option>Club Key Membership</option>
+            <option>Catering</option>
+            <option>Booking Lil' Pigs</option>
+            <option>General Question</option>
+          </select>
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-weight:700; margin-bottom:6px; font-size:.85rem;">Message</label>
+          <textarea rows="4" name="message" style="width:100%; padding:10px; border:1.5px solid var(--blush-deep); border-radius:6px; font-family:var(--font-body);"></textarea>
+        </div>
+        <input type="hidden" name="_next" value="https://canopyclubli.com/visit.html?sent=true">
+        <button type="submit" class="btn btn-forest" style="border:none; cursor:pointer; width:100%;">Send</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="wordmark"><img src="assets/logo-mark-transparent.png" alt="" style="filter:brightness(0) invert(1); height:30px;">The Canopy Club</p>
+      <p style="opacity:.8; max-width:320px;">A Long Island hospitality group — café, wine bar, catering and pop-ups, all under one canopy.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="menu.html">Café Menu</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="visit.html">Visit Us</a>
+    </div>
+    <div>
+      <h4>5 Mill Creek Rd</h4>
+      <a href="visit.html">Port Jefferson, NY</a>
+      <a href="visit.html">Mon&ndash;Sun, 8am&ndash;4pm</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">&copy; 2026 The Canopy Club LLC. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
