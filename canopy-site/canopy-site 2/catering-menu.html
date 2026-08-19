@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catering Menu | The Canopy Club</title>
+<meta name="description" content="The Canopy Club catering menu — breakfast & brunch buffets, boxed lunches, dinner buffet packages, hors d'oeuvres, and beverage service for events of any size.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .menu-section{ margin-bottom: 46px; }
+  .menu-section h3{ color: var(--forest); font-size:1.3rem; border-bottom:2px solid var(--blush); padding-bottom:8px; margin-bottom:8px; }
+  .menu-section .section-sub{ font-size:.86rem; opacity:.75; margin-bottom:18px; }
+  .menu-item{ margin-bottom: 16px; }
+  .menu-item .star{ color: var(--blush-deep); margin-right:4px; }
+  .menu-item p{ font-size:.92rem; color: var(--charcoal); opacity:.85; margin: 2px 0 0; }
+  .menu-note{ font-style:italic; font-size:.85rem; opacity:.75; }
+  .menu-cols{ display:grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 780px){ .menu-cols{ grid-template-columns: 1fr; } }
+  .legend{ font-size:.82rem; opacity:.75; margin-bottom:40px; }
+  .pkg-badge{ display:inline-block; background:var(--forest); color:var(--cream); font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:4px 10px; border-radius:20px; margin-bottom:8px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="wordmark"><img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark">The Canopy Club</a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Café Menu</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html" class="active">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="login.html">Team Login</a>
+      <a href="visit.html">Visit Us</a>
+    </nav>
+    <a href="visit.html#reserve" class="nav-cta">Visit Port Jeff</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <p class="eyebrow">Catering</p>
+      <h1>The Catering Menu</h1>
+      <p class="lede">The same kitchen, the same standards, the same food you know from the café — built into packages sized for your event. Every package scales with guest count; ask us for a custom quote.</p>
+      <div class="hero-actions">
+        <a href="visit.html" class="btn btn-forest">Request a Quote</a>
+        <a href="catering.html" class="btn btn-outline">Back to Catering Overview</a>
+      </div>
+    </div>
+    <img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark" class="hero-mark" style="max-width:220px;">
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="legend"><span class="star">&#10029;</span> Canopy Original — a café signature, scaled for your event.</p>
+
+    <div class="menu-cols">
+      <div>
+        <div class="menu-section">
+          <span class="pkg-badge">Breakfast &amp; Brunch</span>
+          <h3>Continental Breakfast</h3>
+          <p class="section-sub">Priced per person &middot; minimum 15 guests</p>
+          <div class="menu-item"><p>Fresh baked pastry basket — croissants, seasonal scones, cinnamon rolls</p></div>
+          <div class="menu-item"><p>Bagel platter with Canopy Club schmears</p></div>
+          <div class="menu-item"><p>Fresh fruit platter</p></div>
+          <div class="menu-item"><p>Coffee &amp; tea service</p></div>
+        </div>
+
+        <div class="menu-section">
+          <span class="pkg-badge">Breakfast &amp; Brunch</span>
+          <h3><span class="star">&#10029;</span>Canopy Brunch Buffet</h3>
+          <p class="section-sub">Priced per person &middot; minimum 20 guests</p>
+          <div class="menu-item"><p>Scrambled eggs, bacon &amp; sausage, breakfast potatoes — the Canopy Breakfast Platter, buffet-style</p></div>
+          <div class="menu-item"><p>Choice of Lemon Blueberry Pancakes or Classic French Toast</p></div>
+          <div class="menu-item"><p>Fresh fruit &amp; house blueberry cornbread</p></div>
+          <div class="menu-item"><p class="menu-note">Add a chef-attended omelette station, +$ per person</p></div>
+        </div>
+
+        <div class="menu-section">
+          <span class="pkg-badge">Boxed &amp; Individual</span>
+          <h3>Boxed Lunches</h3>
+          <p class="section-sub">Priced per box &middot; each includes chips, a cookie, and a bottled water</p>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Turkey Club</strong><p>Roasted turkey, bacon, lettuce, tomato, mayo, toasted sourdough.</p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Chicken Cutlet Club</strong><p>Crispy chicken cutlet, bacon, lettuce, tomato, sharp cheddar, chipotle mayo.</p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Chopped Caesar Wrap</strong><p>Romaine, grilled chicken, parmesan, croutons, caesar dressing.</p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>French Dip</strong><p>Roast beef, provolone, au jus, horseradish aioli on the side.</p></div>
+          <div class="menu-item"><p class="menu-note">Vegetarian and gluten-free boxes available on request.</p></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="menu-section">
+          <span class="pkg-badge">Buffet Package</span>
+          <h3>The Canopy Buffet</h3>
+          <p class="section-sub">Priced per person &middot; scales from 40 to 300 guests &middot; choice of 2 entrées + 2 sides + bread</p>
+          <div class="menu-item"><strong>Entrées</strong><p><span class="star">&#10029;</span>Creamy Cajun Blackened Shrimp &amp; Polenta &middot; <span class="star">&#10029;</span>Bacon Jam Grilled Cheese Station &middot; Herb Roasted Chicken &middot; Roast Beef Carving Station</p></div>
+          <div class="menu-item"><strong>Sides</strong><p>Truffle Fries &middot; Seasonal Salad &middot; Roasted Seasonal Vegetables &middot; Creamy Parmesan Polenta &middot; Breakfast Potatoes (brunch events)</p></div>
+          <div class="menu-item"><p class="menu-note">Chafing dishes, serving utensils, and disposable service ware included.</p></div>
+        </div>
+
+        <div class="menu-section">
+          <span class="pkg-badge">Plated Dinner</span>
+          <h3>Plated Service</h3>
+          <p class="section-sub">Priced per person &middot; recommended for 40 guests and under &middot; includes salad course</p>
+          <div class="menu-item"><p>Choice of up to 3 entrées for guests to select day-of, served with seasonal vegetables and a starch</p></div>
+          <div class="menu-item"><p class="menu-note">Full-service waitstaff available as an add-on.</p></div>
+        </div>
+
+        <div class="menu-section">
+          <span class="pkg-badge">Cocktail Hour</span>
+          <h3>Hors d'Oeuvres</h3>
+          <p class="section-sub">Priced per dozen &middot; passed or stationed</p>
+          <div class="menu-item"><p>Mini Quiche &middot; Bacon-Wrapped Dates &middot; Deviled Eggs &middot; Shrimp Cocktail &middot; Cheese &amp; Charcuterie Board (stationed)</p></div>
+        </div>
+
+        <div class="menu-section">
+          <span class="pkg-badge">Beverage Service</span>
+          <h3>Drinks &amp; Add-Ons</h3>
+          <div class="menu-item"><p>Coffee &amp; tea service &middot; infused water station &middot; house lemonade</p></div>
+          <div class="menu-item"><p>Mimosa &amp; Bellini bar <span class="menu-note">(brunch events, licensed venues only)</span></p></div>
+          <div class="menu-item"><p>Full bar service available for evening events once our liquor license is active — ask about pairing with our wine bar program.</p></div>
+        </div>
+
+        <div class="menu-section">
+          <span class="pkg-badge">Dessert</span>
+          <h3>Sweets Table</h3>
+          <div class="menu-item"><p>Assorted mini cinnamon rolls, seasonal scones, and house blueberry cornbread bites</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:10px; text-align:center;">
+      <h3 style="font-size:1.1rem;">Club Key members save on every booking</h3>
+      <p style="font-size:.92rem;">Ask about your member discount when you request a quote. Not a member yet? <a href="membership.html" style="font-weight:700; color:var(--forest); text-decoration:underline;">Get your Club Key first.</a></p>
+    </div>
+
+    <p style="text-align:center; margin-top:50px; font-family:var(--font-display); color:var(--forest); font-size:1.2rem;">Good Coffee. Great Food. Better Together.<br><span style="font-family:var(--font-body); font-size:.85rem; text-transform:uppercase; letter-spacing:.1em; color:var(--charcoal);">Pricing scales with guest count and menu selections — request a custom quote.</span></p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="wordmark"><img src="assets/logo-mark-transparent.png" alt="" style="filter:brightness(0) invert(1); height:30px;">The Canopy Club</p>
+      <p style="opacity:.8; max-width:320px;">A Long Island hospitality group — café, wine bar, catering and pop-ups, all under one canopy.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="menu.html">Café Menu</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="login.html">Team Login</a>
+      <a href="visit.html">Visit Us</a>
+    </div>
+    <div>
+      <h4>5 Mill Creek Rd</h4>
+      <a href="visit.html">Port Jefferson, NY</a>
+      <a href="visit.html">Mon&ndash;Sun, 8am&ndash;4pm</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">&copy; 2026 The Canopy Club LLC. All rights reserved.</div>
+</footer>
+
+</body>
+</html>

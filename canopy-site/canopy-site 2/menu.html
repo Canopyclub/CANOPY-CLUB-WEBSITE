@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Café Menu | The Canopy Club</title>
+<meta name="description" content="The Canopy Club café menu — bagels, fresh baked daily, omelettes, benedicts, pancakes and lunch. Served daily 8am–3pm in Port Jefferson.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .menu-section{ margin-bottom: 46px; }
+  .menu-section h3{ color: var(--forest); font-size:1.3rem; border-bottom:2px solid var(--blush); padding-bottom:8px; margin-bottom:18px; }
+  .menu-item{ margin-bottom: 16px; }
+  .menu-item-head{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .menu-item-head strong{ font-size:1rem; }
+  .menu-item .star{ color: var(--blush-deep); margin-right:4px; }
+  .menu-item p{ font-size:.92rem; color: var(--charcoal); opacity:.85; margin: 2px 0 0; }
+  .menu-note{ font-style:italic; font-size:.85rem; opacity:.75; }
+  .menu-cols{ display:grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 780px){ .menu-cols{ grid-template-columns: 1fr; } }
+  .legend{ font-size:.82rem; opacity:.75; margin-bottom:40px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="wordmark"><img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark">The Canopy Club</a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="menu.html" class="active">Café Menu</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="login.html">Team Login</a>
+      <a href="visit.html">Visit Us</a>
+    </nav>
+    <a href="visit.html#reserve" class="nav-cta">Visit Port Jeff</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <p class="eyebrow">Served Daily, 8am&ndash;3pm</p>
+      <h1>The Café Menu</h1>
+      <p class="lede">Bagels, fresh baked daily, a real breakfast-house kitchen, and lunch — everything that comes out of our Port Jefferson kitchen before the wine bar takes over at night.</p>
+    </div>
+    <img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark" class="hero-mark" style="max-width:220px;">
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="legend"><span class="star">&#10029;</span> Canopy Original &nbsp;&mdash;&nbsp; unmarked items are from our bakery partner or noted otherwise.</p>
+
+    <div class="menu-cols">
+      <div>
+        <div class="menu-section">
+          <h3>Bagels &amp; Schmears</h3>
+          <div class="menu-item"><p><strong>Bagels:</strong> Plain &middot; Everything &middot; Cinnamon Raisin</p></div>
+          <div class="menu-item"><p><strong>Canopy Club Schmears:</strong> Plain Cream Cheese &middot; Scallion &amp; Gochujang Cream Cheese &middot; Honey &amp; Candied Pecan Cream Cheese &middot; Pimento &amp; Bacon Cream Cheese &middot; Monthly Schmear <span class="menu-note">(rotating seasonal flavor)</span></p></div>
+          <div class="menu-item"><strong>Cinnamon Sugar Butter</strong><p>Whipped cultured butter with cinnamon and raw sugar.</p></div>
+        </div>
+
+        <div class="menu-section">
+          <h3>Fresh Baked Daily</h3>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>House Cinnamon Roll</strong><p>Warm vanilla glaze.</p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Monthly Cinnamon Roll</strong><p>A rotating seasonal feature.</p></div>
+          <div class="menu-item"><strong>Plain Butter Croissant</strong><p class="menu-note">From our bakery partner.</p></div>
+          <div class="menu-item"><strong>Chocolate Croissant</strong><p class="menu-note">From our bakery partner.</p></div>
+          <div class="menu-item"><strong>Pastel de Nata</strong><p>Traditional Portuguese egg custard tart. <span class="menu-note">From our bakery partner.</span></p></div>
+          <div class="menu-item"><strong>House Blueberry Cornbread</strong><p>Warm, buttery cornbread with fresh blueberries. Served with whipped honey butter.</p></div>
+          <div class="menu-item"><strong>Seasonal Scone</strong><p>A rotating seasonal flavor. Made in house.</p></div>
+        </div>
+
+        <div class="menu-section">
+          <h3>Healthy</h3>
+          <div class="menu-item"><strong>Steel Cut Oatmeal</strong><p>Brown sugar, berries, almonds.</p></div>
+          <div class="menu-item"><strong>Protein Bowl</strong><p>Grilled chicken, quinoa, roasted sweet potato, avocado, spinach, soft egg, herb vinaigrette.</p></div>
+        </div>
+
+        <div class="menu-section">
+          <h3>Signature Breakfast</h3>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Canopy Breakfast Platter</strong><p>Two eggs any style, bacon, ham, sausage, hash browns. Choice of: pancakes, French toast, or Belgian waffle.</p></div>
+        </div>
+
+        <div class="menu-section">
+          <h3>Sides</h3>
+          <p>Hash Browns &middot; Truffle Fries &middot; Side Sausage &middot; Breakfast Potatoes &middot; Fresh Fruit &middot; Side Ham &middot; Fries &middot; Side Bacon</p>
+        </div>
+
+        <div class="menu-section">
+          <h3>Omelettes</h3>
+          <p class="menu-note" style="margin-bottom:14px;">Served with choice of sourdough toast or side salad.</p>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Classic</strong><p>Three eggs, chives.</p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Veggie</strong><p>Spinach, mushrooms, tomatoes, onions, peppers, feta. <span class="menu-note">Add avocado +</span></p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Ham &amp; Cheese</strong><p>Smoked ham, white cheddar.</p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Western</strong><p>Ham, peppers, onions, cheddar.</p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Garden</strong><p>Roasted veggies, goat cheese, arugula. <span class="menu-note">Add avocado +</span></p></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="menu-section">
+          <h3>Morning Favorites</h3>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>The BEC</strong><p>Applewood smoked bacon, two farm eggs, American cheese on a fresh Kaiser roll.</p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>The Canopy Griddle</strong><p>Our take on the McGriddle with maple griddle cakes, sausage, egg and American cheese.</p></div>
+          <div class="menu-item"><strong>Avocado Toast</strong><p>Sourdough, smashed avocado, chili crunch, pickled onion, herbs. <span class="menu-note">Add egg +</span></p></div>
+        </div>
+
+        <div class="menu-section">
+          <h3>Pancakes &amp; French Toast</h3>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Lemon Blueberry Pancakes</strong></div>
+          <div class="menu-item"><strong>Classic Buttermilk Pancakes</strong></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Tempura French Toast</strong><p>Thick brioche fried in a light tempura batter, topped with tiramisu crema.</p></div>
+          <div class="menu-item"><strong>Classic French Toast</strong></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Stuffed Chicken &amp; Waffles</strong><p>Crispy fried chicken, Belgian waffle, hot honey, maple butter.</p></div>
+        </div>
+
+        <div class="menu-section">
+          <h3>Benedicts</h3>
+          <div class="menu-item"><strong>Classic Eggs Benedict</strong></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Fried Chicken Benedict</strong><p>Buttermilk fried chicken, poached eggs, hollandaise, chives.</p></div>
+        </div>
+
+        <div class="menu-section">
+          <h3>Lunch</h3>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Bacon Jam Grilled Cheese &amp; Tomato Soup</strong><p>Aged cheddar, bacon jam on sourdough. Served with creamy tomato soup.</p></div>
+          <div class="menu-item"><strong>Chopped Caesar Wrap</strong><p>Romaine, grilled chicken, parmesan, croutons, caesar dressing.</p></div>
+          <div class="menu-item"><strong>French Dip</strong><p>Roast beef, provolone, au jus, horseradish aioli.</p></div>
+          <div class="menu-item"><strong>Turkey Club</strong><p>Roasted turkey, bacon, lettuce, tomato, mayo, toasted sourdough.</p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Chicken Cutlet Club</strong><p>Crispy chicken cutlet, bacon, lettuce, tomato, sharp cheddar, chipotle mayo on sourdough.</p></div>
+          <div class="menu-item"><span class="star">&#10029;</span><strong>Creamy Cajun Blackened Shrimp &amp; Polenta</strong><p>Blackened shrimp, creamy parmesan polenta, roasted corn, peppers, scallions, spicy cajun cream sauce.</p></div>
+        </div>
+
+        <div class="menu-section">
+          <h3>Add-Ons</h3>
+          <p>Add Egg &middot; Avocado &middot; Extra Cheese &middot; Gluten Free Bread +2</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="card">
+        <h3 style="font-size:1.05rem;">Coffee Pairing Suggestions</h3>
+        <p style="font-size:.92rem;">Cinnamon Roll &mdash; Maple Latte &nbsp;&middot;&nbsp; Bagel &mdash; Drip Coffee &nbsp;&middot;&nbsp; Pastel de Nata &mdash; Cortado<br>Cornbread &mdash; Honey Latte &nbsp;&middot;&nbsp; Bacon Jam Grilled Cheese &mdash; Cappuccino &nbsp;&middot;&nbsp; Blueberry Pancakes &mdash; Cold Brew</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:1.05rem;">We Proudly Source</h3>
+        <p style="font-size:.92rem;">Locally where possible, partnering with trusted artisans who share our commitment to quality.</p>
+      </div>
+    </div>
+
+    <p style="text-align:center; margin-top:50px; font-family:var(--font-display); color:var(--forest); font-size:1.2rem;">Good Coffee. Great Food. Better Together.<br><span style="font-family:var(--font-body); font-size:.85rem; text-transform:uppercase; letter-spacing:.1em; color:var(--charcoal);">Thank you for supporting local.</span></p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="wordmark"><img src="assets/logo-mark-transparent.png" alt="" style="filter:brightness(0) invert(1); height:30px;">The Canopy Club</p>
+      <p style="opacity:.8; max-width:320px;">A Long Island hospitality group — café, wine bar, catering and pop-ups, all under one canopy.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="menu.html">Café Menu</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="login.html">Team Login</a>
+      <a href="visit.html">Visit Us</a>
+    </div>
+    <div>
+      <h4>5 Mill Creek Rd</h4>
+      <a href="visit.html">Port Jefferson, NY</a>
+      <a href="visit.html">Mon&ndash;Sun, 8am&ndash;4pm</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">&copy; 2026 The Canopy Club LLC. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
