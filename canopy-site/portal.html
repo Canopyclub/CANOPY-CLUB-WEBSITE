@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's Prep | The Canopy Club</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .portal-wrap{ max-width: 640px; margin: 0 auto; padding: 60px 20px 80px; }
+  .portal-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px; }
+  .portal-header img{ height: 32px; }
+  .logout-link{ font-size:.82rem; font-weight:700; color: var(--forest); text-decoration:underline; cursor:pointer; }
+  .greeting{ margin-top: 24px; }
+  .greeting .eyebrow{ display:block; margin-bottom:6px; }
+  .greeting h1{ font-size: 1.9rem; color: var(--forest); }
+  .role-tag{ display:inline-block; background:var(--blush); color:var(--forest-deep); padding:5px 14px; border-radius:20px; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-top:6px; }
+  .prep-card{ background: var(--cream-2); border-radius: 14px; padding: 28px 26px; margin-top: 28px; }
+  .prep-card h2{ font-size:1.1rem; color:var(--forest); margin-bottom: 16px; }
+  .prep-item{ display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--blush); }
+  .prep-item:last-child{ border-bottom:none; }
+  .prep-item input[type="checkbox"]{ margin-top:3px; width:18px; height:18px; accent-color: var(--forest); flex-shrink:0; }
+  .prep-item label{ font-size:.96rem; line-height:1.5; }
+  .loading, .empty-state{ text-align:center; opacity:.7; padding: 40px 0; }
+</style>
+</head>
+<body>
+
+<div class="portal-wrap">
+  <div class="portal-header">
+    <img src="assets/logo-mark-transparent.png" alt="The Canopy Club">
+    <span class="logout-link" id="logoutBtn">Sign Out</span>
+  </div>
+
+  <div id="content" class="loading">Loading your prep notes&hellip;</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  const SUPABASE_URL = "YOUR_SUPABASE_URL";
+  const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+  const supa = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // ---------------------------------------------------------------
+  // PREP NOTE TEMPLATES — edit this to change what shows up.
+  // Structure: PREP_NOTES[day][role] = [ "task", "task", ... ]
+  // Days: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
+  // ---------------------------------------------------------------
+  const PREP_NOTES = {
+    Monday: {
+      Barista: ["Restock oat, whole, and almond milk", "Brew first drip batch by 7:45am", "Check pastry case count against Fresh Baked Daily list"],
+      Kitchen: ["Prep breakfast potatoes for the line", "Portion bacon and sausage for AM rush", "Confirm egg delivery arrived"],
+      Server: ["Wipe down and reset all dining room tables", "Check high chairs and booster seats are clean", "Review today's Monthly Cinnamon Roll flavor with the team"],
+      "Shift Lead": ["Open registers and count starting cash", "Walk the dining room for a pre-open clean check", "Review call-outs and adjust floor coverage"]
+    },
+    Tuesday: {
+      Barista: ["Restock oat, whole, and almond milk", "Descale espresso machine (weekly)", "Check pastry case count"],
+      Kitchen: ["Prep breakfast potatoes", "Restock hash brown patties", "Rotate walk-in stock (FIFO)"],
+      Server: ["Reset dining room tables", "Polish silverware bins", "Confirm today's specials with kitchen"],
+      "Shift Lead": ["Open registers and count starting cash", "Pre-open dining room walk", "Check weekly labor vs. schedule"]
+    },
+    Wednesday: {
+      Barista: ["Restock milk options", "Brew first batch by 7:45am", "Wipe down syrup pumps"],
+      Kitchen: ["Prep potatoes and proteins for AM rush", "Check produce delivery against order", "Label and date all prepped items"],
+      Server: ["Reset tables", "Refill condiment stations", "Confirm allergy notes for any reservations"],
+      "Shift Lead": ["Open registers", "Pre-open walk", "Mid-week inventory spot check"]
+    },
+    Thursday: {
+      Barista: ["Restock milk options", "Check pastry case", "Clean grinder burrs"],
+      Kitchen: ["Prep for AM rush", "Begin prep for weekend catering if applicable", "Check walk-in temps"],
+      Server: ["Reset tables", "Confirm any large party reservations for the weekend", "Restock to-go supplies"],
+      "Shift Lead": ["Open registers", "Pre-open walk", "Confirm weekend schedule is posted"]
+    },
+    Friday: {
+      Barista: ["Restock milk options", "Brew first batch by 7:45am", "Double-check pastry case ahead of weekend rush"],
+      Kitchen: ["Heavy AM prep — expect higher volume", "Confirm weekend catering pull sheet if applicable", "Check all walk-in temps"],
+      Server: ["Reset tables", "Confirm Thu-Sat wine bar setup status", "Restock to-go supplies"],
+      "Shift Lead": ["Open registers", "Pre-open walk", "Confirm evening program staffing (once wine bar is live)"]
+    },
+    Saturday: {
+      Barista: ["Restock milk options — expect high weekend volume", "Brew first batch by 7:45am", "Check pastry case count"],
+      Kitchen: ["Heavy AM prep", "Check weekend brunch specials with team", "Confirm walk-in temps"],
+      Server: ["Reset tables", "Confirm reservations for the day", "Restock to-go supplies"],
+      "Shift Lead": ["Open registers", "Pre-open walk", "Weekend floor coverage check"]
+    },
+    Sunday: {
+      Barista: ["Restock milk options", "Brew first batch by 7:45am", "Check pastry case count"],
+      Kitchen: ["AM prep for brunch rush", "Confirm any catering pickups today", "Check walk-in temps"],
+      Server: ["Reset tables", "Confirm reservations", "Restock to-go supplies"],
+      "Shift Lead": ["Open registers", "Pre-open walk", "Prep weekly recap notes for Monday"]
+    }
+  };
+
+  const content = document.getElementById('content');
+
+  async function loadPortal(){
+    const { data: sessionData } = await supa.auth.getSession();
+    if (!sessionData.session){
+      window.location.href = "login.html";
+      return;
+    }
+
+    const user = sessionData.session.user;
+    const { data: profile, error } = await supa
+      .from('profiles')
+      .select('name, role')
+      .eq('id', user.id)
+      .single();
+
+    if (error || !profile){
+      content.innerHTML = `<div class="empty-state">We couldn't find your profile. Ask your manager to double-check your account setup.</div>`;
+      return;
+    }
+
+    const dayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+    const dateStr = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+    const tasks = (PREP_NOTES[dayName] && PREP_NOTES[dayName][profile.role]) || [];
+
+    let taskHtml = tasks.length
+      ? tasks.map((t, i) => `
+          <div class="prep-item">
+            <input type="checkbox" id="task${i}">
+            <label for="task${i}">${t}</label>
+          </div>`).join('')
+      : `<p style="opacity:.7;">No prep notes set for ${profile.role} on ${dayName} yet.</p>`;
+
+    content.innerHTML = `
+      <div class="greeting">
+        <span class="eyebrow">${dayName}, ${dateStr}</span>
+        <h1>Good shift, ${profile.name.split(' ')[0]}.</h1>
+        <span class="role-tag">${profile.role}</span>
+      </div>
+      <div class="prep-card">
+        <h2>Today's Prep</h2>
+        ${taskHtml}
+      </div>
+    `;
+  }
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await supa.auth.signOut();
+    window.location.href = "login.html";
+  });
+
+  loadPortal();
+</script>
+
+</body>
+</html>
