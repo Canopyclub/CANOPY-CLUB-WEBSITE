@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Lil' Pigs | The Canopy Club</title>
+<meta name="description" content="Book the Lil' Pigs hot dog cart for your next event — pick a package, pick your pigs, and reserve your date.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Caveat:wght@600;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .booker{ max-width: 720px; margin: 0 auto; }
+  .step-track{ display:flex; justify-content:space-between; margin-bottom:44px; position:relative; }
+  .step-track::before{ content:""; position:absolute; top:14px; left:0; right:0; height:2px; background:var(--blush); z-index:0; }
+  .step-dot{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .step-dot .circle{ width:30px; height:30px; border-radius:50%; background:var(--cream); border:2px solid var(--blush-deep); display:flex; align-items:center; justify-content:center; font-family:var(--font-body); font-weight:700; font-size:.85rem; color:var(--forest); }
+  .step-dot.active .circle{ background:var(--forest); border-color:var(--forest); color:var(--cream); }
+  .step-dot.done .circle{ background:var(--forest); border-color:var(--forest); color:var(--cream); }
+  .step-dot span.label{ font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; color:var(--charcoal); opacity:.7; }
+  .step-panel{ display:none; }
+  .step-panel.active{ display:block; }
+  .field{ margin-bottom:20px; }
+  .field label{ display:block; font-weight:700; margin-bottom:6px; font-size:.88rem; }
+  .field input, .field select{ width:100%; padding:12px; border:1.5px solid var(--blush-deep); border-radius:8px; font-family:var(--font-body); font-size:1rem; }
+  .stepper{ display:flex; align-items:center; gap:16px; }
+  .stepper button{ width:40px; height:40px; border-radius:50%; border:1.5px solid var(--forest); background:var(--cream); color:var(--forest); font-size:1.3rem; cursor:pointer; }
+  .stepper .count{ font-family:var(--font-display); font-size:1.5rem; color:var(--forest); min-width:50px; text-align:center; }
+  .pkg-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width:700px){ .pkg-grid{ grid-template-columns:1fr; } }
+  .pkg-card{ border:2px solid var(--cream-2); border-radius:12px; padding:22px; cursor:pointer; transition:border-color .15s, transform .15s; background:var(--cream-2); }
+  .pkg-card:hover{ transform:translateY(-3px); }
+  .pkg-card.selected{ border-color:var(--forest); background:var(--cream); box-shadow:0 10px 24px -16px rgba(36,99,54,.4); }
+  .pkg-card h3{ font-size:1.1rem; color:var(--forest); margin-bottom:4px; }
+  .pkg-card .pp{ font-family:var(--font-display); color:var(--forest); font-size:1.6rem; }
+  .pkg-card p.rule{ font-size:.85rem; opacity:.8; margin-top:6px; }
+  .pig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:700px){ .pig-grid{ grid-template-columns:1fr; } }
+  .pig-group h4{ color:var(--forest); font-size:.95rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px; }
+  .pig-option{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; margin-bottom:6px; cursor:pointer; border:1.5px solid var(--cream-2); }
+  .pig-option.picked{ border-color:var(--forest); background:var(--cream-2); }
+  .pig-option input{ pointer-events:none; }
+  .pick-status{ margin-top:16px; font-size:.9rem; font-weight:700; color:var(--forest); }
+  .pick-status.warn{ color:#B4472A; }
+  .summary-card{ background:var(--cream-2); border-radius:12px; padding:26px; }
+  .summary-row{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--blush); font-size:.95rem; }
+  .summary-row:last-child{ border-bottom:none; }
+  .summary-row.total{ font-family:var(--font-display); font-size:1.3rem; color:var(--forest); }
+  .nav-row{ display:flex; justify-content:space-between; margin-top:32px; }
+  .nav-row button, .nav-row a{ font-family:var(--font-body); }
+  .btn-disabled{ opacity:.4; pointer-events:none; }
+  .confirm-box{ text-align:center; padding:40px 20px; }
+</style>
+</head>
+<body>
+ 
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="wordmark"><img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark">The Canopy Club</a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Café Menu</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html" class="active">Lil' Pigs Cart</a>
+      <a href="visit.html">Visit Us</a>
+    </nav>
+    <a href="visit.html#reserve" class="nav-cta">Visit Port Jeff</a>
+  </div>
+</header>
+ 
+<section class="hero" style="padding-bottom:60px;">
+  <div class="container">
+    <p class="eyebrow">Book Lil' Pigs</p>
+    <h1 style="max-width:640px;">Pick a package.<br>Pick your pigs.<br>Reserve your date.</h1>
+    <p class="lede">Three steps and you're booked. A member of our team will follow up to confirm your date and collect a deposit.</p>
+  </div>
+</section>
+ 
+<section>
+  <div class="container booker">
+ 
+    <div class="step-track">
+      <div class="step-dot active" data-step-dot="1"><div class="circle">1</div><span class="label">Event</span></div>
+      <div class="step-dot" data-step-dot="2"><div class="circle">2</div><span class="label">Package</span></div>
+      <div class="step-dot" data-step-dot="3"><div class="circle">3</div><span class="label">Your Pigs</span></div>
+      <div class="step-dot" data-step-dot="4"><div class="circle">4</div><span class="label">Review</span></div>
+    </div>
+ 
+    <!-- STEP 1: Event details -->
+    <div class="step-panel active" data-step="1">
+      <div class="field">
+        <label>Event date</label>
+        <input type="date" id="eventDate" required>
+      </div>
+      <div class="field">
+        <label>Event type</label>
+        <select id="eventType">
+          <option>Birthday party</option>
+          <option>Wedding</option>
+          <option>Corporate event</option>
+          <option>Block party</option>
+          <option>Market / fair</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Location (city or venue)</label>
+        <input type="text" id="eventLocation" placeholder="e.g. Port Jefferson, NY" required>
+      </div>
+      <div class="field">
+        <label>Guest count <span style="font-weight:400; opacity:.7;">(10 minimum)</span></label>
+        <div class="stepper">
+          <button type="button" onclick="changeGuests(-5)">&minus;</button>
+          <span class="count" id="guestCount">10</span>
+          <button type="button" onclick="changeGuests(5)">+</button>
+        </div>
+      </div>
+      <div class="nav-row">
+        <span></span>
+        <button class="btn btn-forest" style="border:none; cursor:pointer;" onclick="goToStep(2)">Next: Choose a Package &rarr;</button>
+      </div>
+    </div>
+ 
+    <!-- STEP 2: Package -->
+    <div class="step-panel" data-step="2">
+      <div class="pkg-grid">
+        <div class="pkg-card" data-pkg="pigout" onclick="selectPackage('pigout')">
+          <h3>The Pig Out</h3>
+          <p class="pp">$22<span style="font-size:.9rem; font-family:var(--font-body);">/person</span></p>
+          <p class="rule">Choice of 3 Classic Pigs</p>
+        </div>
+        <div class="pkg-card" data-pkg="loaded" onclick="selectPackage('loaded')">
+          <h3>The Loaded Dog</h3>
+          <p class="pp">$26<span style="font-size:.9rem; font-family:var(--font-body);">/person</span></p>
+          <p class="rule">2 Classic + 2 Fancy Pigs</p>
+        </div>
+        <div class="pkg-card" data-pkg="topdog" onclick="selectPackage('topdog')">
+          <h3>The Top Dog</h3>
+          <p class="pp">$30<span style="font-size:.9rem; font-family:var(--font-body);">/person</span></p>
+          <p class="rule">Any 5 Pigs, your call</p>
+        </div>
+      </div>
+      <p style="font-size:.85rem; opacity:.75; margin-top:18px;">All packages run 3 hours and include setup/breakdown, tableware, and a dedicated server.</p>
+      <div class="nav-row">
+        <button class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(1)">&larr; Back</button>
+        <button class="btn btn-forest" id="toStep3" style="border:none; cursor:pointer;" onclick="goToStep(3)" disabled>Next: Pick Your Pigs &rarr;</button>
+      </div>
+    </div>
+ 
+    <!-- STEP 3: Pig selection -->
+    <div class="step-panel" data-step="3">
+      <div class="pig-grid">
+        <div class="pig-group">
+          <h4>Classic Pigs</h4>
+          <div class="pig-option" data-pig="classic" data-name="NYC Style" onclick="togglePig(this)"><input type="checkbox">NYC Style</div>
+          <div class="pig-option" data-pig="classic" data-name="Hot & Sweet" onclick="togglePig(this)"><input type="checkbox">Hot &amp; Sweet</div>
+          <div class="pig-option" data-pig="classic" data-name="Chili Dog" onclick="togglePig(this)"><input type="checkbox">Chili Dog</div>
+          <div class="pig-option" data-pig="classic" data-name="Pickled Pig" onclick="togglePig(this)"><input type="checkbox">Pickled Pig</div>
+        </div>
+        <div class="pig-group">
+          <h4>Fancy Pigs</h4>
+          <div class="pig-option" data-pig="fancy" data-name="Truffle Shuffle" onclick="togglePig(this)"><input type="checkbox">Truffle Shuffle</div>
+          <div class="pig-option" data-pig="fancy" data-name="Mac Daddy" onclick="togglePig(this)"><input type="checkbox">Mac Daddy</div>
+          <div class="pig-option" data-pig="fancy" data-name="Flamin' Hot Pig" onclick="togglePig(this)"><input type="checkbox">Flamin' Hot Pig</div>
+          <div class="pig-option" data-pig="fancy" data-name="Nashville Hot Piggy" onclick="togglePig(this)"><input type="checkbox">Nashville Hot Piggy</div>
+        </div>
+      </div>
+      <p class="pick-status" id="pickStatus"></p>
+      <div class="nav-row">
+        <button class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(2)">&larr; Back</button>
+        <button class="btn btn-forest" id="toStep4" style="border:none; cursor:pointer;" onclick="goToStep(4)" disabled>Next: Review &rarr;</button>
+      </div>
+    </div>
+ 
+    <!-- STEP 4: Review + submit -->
+    <div class="step-panel" data-step="4">
+      <div class="summary-card" id="summaryCard"></div>
+ 
+      <form id="bookingForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:26px;">
+        <input type="hidden" name="event_date" id="hidDate">
+        <input type="hidden" name="event_type" id="hidType">
+        <input type="hidden" name="location" id="hidLocation">
+        <input type="hidden" name="guests" id="hidGuests">
+        <input type="hidden" name="package" id="hidPackage">
+        <input type="hidden" name="pigs" id="hidPigs">
+        <input type="hidden" name="total" id="hidTotal">
+        <input type="hidden" name="deposit" id="hidDeposit">
+ 
+        <div class="field">
+          <label>Your name</label>
+          <input type="text" name="name" required>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="tel" name="phone" required>
+        </div>
+ 
+        <div class="nav-row">
+          <button type="button" class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(3)">&larr; Back</button>
+          <button type="submit" class="btn btn-forest" style="border:none; cursor:pointer;">Submit Booking Request</button>
+        </div>
+      </form>
+      <p style="font-size:.82rem; opacity:.7; margin-top:14px;">This reserves your request, not your date — we'll follow up to confirm availability and send a deposit link.</p>
+    </div>
+ 
+  </div>
+</section>
+ 
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="wordmark"><img src="assets/logo-mark-transparent.png" alt="" style="filter:brightness(0) invert(1); height:30px;">The Canopy Club</p>
+      <p style="opacity:.8; max-width:320px;">A Long Island hospitality group — café, wine bar, catering and pop-ups, all under one canopy.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="menu.html">Café Menu</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="visit.html">Visit Us</a>
+    </div>
+    <div>
+      <h4>5 Mill Creek Rd</h4>
+      <a href="visit.html">Port Jefferson, NY</a>
+      <a href="visit.html">Mon&ndash;Sun, 8am&ndash;4pm</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">&copy; 2026 The Canopy Club LLC. All rights reserved.</div>
+</footer>
+ 
+<script>
+const PACKAGES = {
+  pigout: { name: "The Pig Out", price: 22, rule: "classic-3" },
+  loaded: { name: "The Loaded Dog", price: 26, rule: "mixed-2-2" },
+  topdog: { name: "The Top Dog", price: 30, rule: "any-5" }
+};
+ 
+let state = { guests: 10, pkg: null, pigs: [] };
+ 
+function goToStep(n){
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector('[data-step="'+n+'"]').classList.add('active');
+  document.querySelectorAll('.step-dot').forEach(d => {
+    const s = parseInt(d.dataset.stepDot);
+    d.classList.toggle('active', s === n);
+    d.classList.toggle('done', s < n);
+  });
+  if(n === 4) renderSummary();
+  window.scrollTo({top: document.querySelector('.booker').offsetTop - 40, behavior:'smooth'});
+}
+ 
+function changeGuests(delta){
+  state.guests = Math.max(10, state.guests + delta);
+  document.getElementById('guestCount').textContent = state.guests;
+}
+ 
+function selectPackage(key){
+  state.pkg = key;
+  state.pigs = [];
+  document.querySelectorAll('.pkg-card').forEach(c => c.classList.toggle('selected', c.dataset.pkg === key));
+  document.getElementById('toStep3').disabled = false;
+  document.querySelectorAll('.pig-option').forEach(o => o.classList.remove('picked'));
+}
+ 
+function togglePig(el){
+  const name = el.dataset.name;
+  const type = el.dataset.pig;
+  const idx = state.pigs.findIndex(p => p.name === name);
+  const rule = PACKAGES[state.pkg].rule;
+  const maxTotal = rule === 'classic-3' ? 3 : (rule === 'mixed-2-2' ? 4 : 5);
+ 
+  if(idx > -1){
+    state.pigs.splice(idx, 1);
+    el.classList.remove('picked');
+  } else {
+    if(state.pigs.length >= maxTotal){ flashStatus("You've already picked enough pigs for this package.", true); return; }
+    if(rule === 'classic-3' && type !== 'classic'){ flashStatus("The Pig Out is classic pigs only.", true); return; }
+    if(rule === 'mixed-2-2'){
+      const classicCount = state.pigs.filter(p => p.type === 'classic').length;
+      const fancyCount = state.pigs.filter(p => p.type === 'fancy').length;
+      if(type === 'classic' && classicCount >= 2){ flashStatus("Loaded Dog is 2 classic + 2 fancy — you've got your 2 classics.", true); return; }
+      if(type === 'fancy' && fancyCount >= 2){ flashStatus("Loaded Dog is 2 classic + 2 fancy — you've got your 2 fancy.", true); return; }
+    }
+    state.pigs.push({ name, type });
+    el.classList.add('picked');
+  }
+  updatePickStatus();
+}
+ 
+function flashStatus(msg, warn){
+  const el = document.getElementById('pickStatus');
+  el.textContent = msg;
+  el.classList.toggle('warn', !!warn);
+}
+ 
+function updatePickStatus(){
+  const rule = PACKAGES[state.pkg].rule;
+  const need = rule === 'classic-3' ? 3 : (rule === 'mixed-2-2' ? 4 : 5);
+  const has = state.pigs.length;
+  document.getElementById('toStep4').disabled = has !== need;
+  if(has === need){
+    flashStatus("You're all set — " + has + " pigs picked.", false);
+  } else {
+    flashStatus((need - has) + " more pig" + (need - has === 1 ? '' : 's') + " to pick.", false);
+  }
+}
+ 
+function renderSummary(){
+  const pkg = PACKAGES[state.pkg];
+  const total = pkg.price * state.guests;
+  const deposit = Math.round(total * 0.3);
+  const date = document.getElementById('eventDate').value || '—';
+  const type = document.getElementById('eventType').value;
+  const loc = document.getElementById('eventLocation').value || '—';
+  const pigList = state.pigs.map(p => p.name).join(', ');
+ 
+  document.getElementById('summaryCard').innerHTML = `
+    <div class="summary-row"><span>Date</span><span>${date}</span></div>
+    <div class="summary-row"><span>Event type</span><span>${type}</span></div>
+    <div class="summary-row"><span>Location</span><span>${loc}</span></div>
+    <div class="summary-row"><span>Guests</span><span>${state.guests}</span></div>
+    <div class="summary-row"><span>Package</span><span>${pkg.name}</span></div>
+    <div class="summary-row"><span>Your pigs</span><span style="text-align:right; max-width:60%;">${pigList}</span></div>
+    <div class="summary-row total"><span>Estimated total</span><span>$${total.toLocaleString()}</span></div>
+    <div class="summary-row"><span>Deposit due to reserve (30%)</span><span>$${deposit.toLocaleString()}</span></div>
+  `;
+ 
+  document.getElementById('hidDate').value = date;
+  document.getElementById('hidType').value = type;
+  document.getElementById('hidLocation').value = loc;
+  document.getElementById('hidGuests').value = state.guests;
+  document.getElementById('hidPackage').value = pkg.name;
+  document.getElementById('hidPigs').value = pigList;
+  document.getElementById('hidTotal').value = '$' + total.toLocaleString();
+  document.getElementById('hidDeposit').value = '$' + deposit.toLocaleString();
+}
+ 
+document.getElementById('bookingForm').addEventListener('submit', function(e){
+  // Formspree handles the actual submit; this just prevents moving on with an empty package/pig state.
+  if(!state.pkg || state.pigs.length === 0){
+    e.preventDefault();
+    alert('Please complete package and pig selection before submitting.');
+  }
+});
+</script>
+ 
+</body>
+</html>
+ 
