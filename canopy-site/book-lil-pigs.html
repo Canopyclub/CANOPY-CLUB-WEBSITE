@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book Lil' Pigs | The Canopy Club</title>
-<meta name="description" content="Book the Lil' Pigs hot dog cart for your next event — pick a package, pick your pigs, and reserve your date.">
+<meta name="description" content="Book the Lil' Pigs hot dog cart for your next event — full service with a server, or self-serve rental — and reserve your date.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Caveat:wght@600;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -16,7 +16,7 @@
   .step-dot .circle{ width:30px; height:30px; border-radius:50%; background:var(--cream); border:2px solid var(--blush-deep); display:flex; align-items:center; justify-content:center; font-family:var(--font-body); font-weight:700; font-size:.85rem; color:var(--forest); }
   .step-dot.active .circle{ background:var(--forest); border-color:var(--forest); color:var(--cream); }
   .step-dot.done .circle{ background:var(--forest); border-color:var(--forest); color:var(--cream); }
-  .step-dot span.label{ font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; color:var(--charcoal); opacity:.7; }
+  .step-dot span.label{ font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; color:var(--charcoal); opacity:.7; text-align:center; }
   .step-panel{ display:none; }
   .step-panel.active{ display:block; }
   .field{ margin-bottom:20px; }
@@ -25,14 +25,23 @@
   .stepper{ display:flex; align-items:center; gap:16px; }
   .stepper button{ width:40px; height:40px; border-radius:50%; border:1.5px solid var(--forest); background:var(--cream); color:var(--forest); font-size:1.3rem; cursor:pointer; }
   .stepper .count{ font-family:var(--font-display); font-size:1.5rem; color:var(--forest); min-width:50px; text-align:center; }
-  .pkg-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-  @media (max-width:700px){ .pkg-grid{ grid-template-columns:1fr; } }
-  .pkg-card{ border:2px solid var(--cream-2); border-radius:12px; padding:22px; cursor:pointer; transition:border-color .15s, transform .15s; background:var(--cream-2); }
-  .pkg-card:hover{ transform:translateY(-3px); }
-  .pkg-card.selected{ border-color:var(--forest); background:var(--cream); box-shadow:0 10px 24px -16px rgba(36,99,54,.4); }
-  .pkg-card h3{ font-size:1.1rem; color:var(--forest); margin-bottom:4px; }
+  .mode-grid, .pkg-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .pkg-grid{ grid-template-columns:repeat(3,1fr); }
+  @media (max-width:700px){ .mode-grid, .pkg-grid{ grid-template-columns:1fr; } }
+  .mode-card, .pkg-card, .radio-card{ border:2px solid var(--cream-2); border-radius:12px; padding:22px; cursor:pointer; transition:border-color .15s, transform .15s; background:var(--cream-2); }
+  .mode-card:hover, .pkg-card:hover{ transform:translateY(-3px); }
+  .mode-card.selected, .pkg-card.selected, .radio-card.selected{ border-color:var(--forest); background:var(--cream); box-shadow:0 10px 24px -16px rgba(36,99,54,.4); }
+  .mode-card h3, .pkg-card h3{ font-size:1.1rem; color:var(--forest); margin-bottom:4px; }
+  .mode-card p, .pkg-card p.rule{ font-size:.88rem; opacity:.8; margin-top:6px; }
   .pkg-card .pp{ font-family:var(--font-display); color:var(--forest); font-size:1.6rem; }
-  .pkg-card p.rule{ font-size:.85rem; opacity:.8; margin-top:6px; }
+  .radio-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:700px){ .radio-row{ grid-template-columns:1fr; } }
+  .radio-card{ text-align:center; font-weight:700; color:var(--forest); }
+  .toggle-card{ background:var(--cream-2); border-radius:12px; padding:22px; display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; }
+  .toggle-card .switch{ width:52px; height:30px; border-radius:20px; background:var(--blush-deep); position:relative; cursor:pointer; flex-shrink:0; transition:background .15s; }
+  .toggle-card .switch.on{ background:var(--forest); }
+  .toggle-card .switch .knob{ width:24px; height:24px; border-radius:50%; background:var(--cream); position:absolute; top:3px; left:3px; transition:left .15s; }
+  .toggle-card .switch.on .knob{ left:25px; }
   .pig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
   @media (max-width:700px){ .pig-grid{ grid-template-columns:1fr; } }
   .pig-group h4{ color:var(--forest); font-size:.95rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px; }
@@ -47,12 +56,11 @@
   .summary-row.total{ font-family:var(--font-display); font-size:1.3rem; color:var(--forest); }
   .nav-row{ display:flex; justify-content:space-between; margin-top:32px; }
   .nav-row button, .nav-row a{ font-family:var(--font-body); }
-  .btn-disabled{ opacity:.4; pointer-events:none; }
-  .confirm-box{ text-align:center; padding:40px 20px; }
+  .quote-note{ background:var(--blush); color:var(--forest-deep); padding:14px 16px; border-radius:8px; font-size:.9rem; margin-top:20px; }
 </style>
 </head>
 <body>
-
+ 
 <header class="site-header">
   <div class="container nav-row">
     <a href="index.html" class="wordmark"><img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark">The Canopy Club</a>
@@ -69,30 +77,57 @@
     <a href="visit.html#reserve" class="nav-cta">Visit Port Jeff</a>
   </div>
 </header>
-
+ 
 <section class="hero" style="padding-bottom:60px;">
   <div class="container">
     <p class="eyebrow">Book Lil' Pigs</p>
-    <h1 style="max-width:640px;">Pick a package.<br>Pick your pigs.<br>Reserve your date.</h1>
-    <p class="lede">Three steps and you're booked. A member of our team will follow up to confirm your date and collect a deposit.</p>
+    <h1 style="max-width:640px;">Full service or self-serve.<br>Your call.</h1>
+    <p class="lede">A few steps and you're booked. A member of our team will follow up to confirm your date and collect a deposit.</p>
   </div>
 </section>
-
+ 
 <section>
   <div class="container booker">
-
-    <div class="step-track">
-      <div class="step-dot active" data-step-dot="1"><div class="circle">1</div><span class="label">Event</span></div>
-      <div class="step-dot" data-step-dot="2"><div class="circle">2</div><span class="label">Package</span></div>
-      <div class="step-dot" data-step-dot="3"><div class="circle">3</div><span class="label">Your Pigs</span></div>
-      <div class="step-dot" data-step-dot="4"><div class="circle">4</div><span class="label">Review</span></div>
-    </div>
-
-    <!-- STEP 1: Event details -->
+ 
+    <div class="step-track" id="stepTrack"></div>
+ 
+    <!-- STEP 1: Mode -->
     <div class="step-panel active" data-step="1">
-      <div class="field">
-        <label>Event date</label>
+      <div class="mode-grid">
+        <div class="mode-card" data-mode="full" onclick="selectMode('full')">
+          <h3>Full Service</h3>
+          <p>Our team brings the cart, cooks, and serves — pick a package and your pigs.</p>
+        </div>
+        <div class="mode-card" data-mode="rental" onclick="selectMode('rental')">
+          <h3>Self-Serve Rental</h3>
+          <p>We drop the cart off and pick it up — you run the show. Great for backyard parties.</p>
+        </div>
+      </div>
+      <div class="nav-row">
+        <span></span>
+        <button class="btn btn-forest" id="toStep2" style="border:none; cursor:pointer;" onclick="goToStep(2)" disabled>Next &rarr;</button>
+      </div>
+    </div>
+ 
+    <!-- STEP 2: Event details -->
+    <div class="step-panel" data-step="2">
+      <div class="field" id="eventDateField">
+        <label id="eventDateLabel">Event date</label>
         <input type="date" id="eventDate" required>
+      </div>
+      <div class="field" id="rentalTimingFields" style="display:none;">
+        <label>Drop-off</label>
+        <div class="radio-row">
+          <div class="radio-card" data-value="day-before" onclick="selectRadio(this, 'dropoff')">Day Before Event</div>
+          <div class="radio-card" data-value="morning-of" onclick="selectRadio(this, 'dropoff')">Morning Of Event</div>
+        </div>
+      </div>
+      <div class="field" id="rentalPickupFields" style="display:none;">
+        <label>Pickup</label>
+        <div class="radio-row">
+          <div class="radio-card" data-value="that-night" onclick="selectRadio(this, 'pickup')">That Night</div>
+          <div class="radio-card" data-value="next-day" onclick="selectRadio(this, 'pickup')">Next Day</div>
+        </div>
       </div>
       <div class="field">
         <label>Event type</label>
@@ -110,7 +145,7 @@
         <input type="text" id="eventLocation" placeholder="e.g. Port Jefferson, NY" required>
       </div>
       <div class="field">
-        <label>Guest count <span style="font-weight:400; opacity:.7;">(10 minimum)</span></label>
+        <label id="guestLabel">Guest count <span style="font-weight:400; opacity:.7;">(10 minimum)</span></label>
         <div class="stepper">
           <button type="button" onclick="changeGuests(-5)">&minus;</button>
           <span class="count" id="guestCount">10</span>
@@ -118,13 +153,13 @@
         </div>
       </div>
       <div class="nav-row">
-        <span></span>
-        <button class="btn btn-forest" style="border:none; cursor:pointer;" onclick="goToStep(2)">Next: Choose a Package &rarr;</button>
+        <button class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(1)">&larr; Back</button>
+        <button class="btn btn-forest" id="toStep3" style="border:none; cursor:pointer;" onclick="handleStep2Next()">Next &rarr;</button>
       </div>
     </div>
-
-    <!-- STEP 2: Package -->
-    <div class="step-panel" data-step="2">
+ 
+    <!-- STEP 3: Package (full service) -->
+    <div class="step-panel" data-step="3a">
       <div class="pkg-grid">
         <div class="pkg-card" data-pkg="pigout" onclick="selectPackage('pigout')">
           <h3>The Pig Out</h3>
@@ -144,13 +179,13 @@
       </div>
       <p style="font-size:.85rem; opacity:.75; margin-top:18px;">All packages run 3 hours and include setup/breakdown, tableware, and a dedicated server.</p>
       <div class="nav-row">
-        <button class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(1)">&larr; Back</button>
-        <button class="btn btn-forest" id="toStep3" style="border:none; cursor:pointer;" onclick="goToStep(3)" disabled>Next: Pick Your Pigs &rarr;</button>
+        <button class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(2)">&larr; Back</button>
+        <button class="btn btn-forest" id="toStep3b" style="border:none; cursor:pointer;" onclick="goToStep('3b')" disabled>Next: Pick Your Pigs &rarr;</button>
       </div>
     </div>
-
-    <!-- STEP 3: Pig selection -->
-    <div class="step-panel" data-step="3">
+ 
+    <!-- STEP 3b: Pig selection (full service) -->
+    <div class="step-panel" data-step="3b">
       <div class="pig-grid">
         <div class="pig-group">
           <h4>Classic Pigs</h4>
@@ -169,16 +204,34 @@
       </div>
       <p class="pick-status" id="pickStatus"></p>
       <div class="nav-row">
-        <button class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(2)">&larr; Back</button>
+        <button class="btn btn-outline" style="cursor:pointer;" onclick="goToStep('3a')">&larr; Back</button>
         <button class="btn btn-forest" id="toStep4" style="border:none; cursor:pointer;" onclick="goToStep(4)" disabled>Next: Review &rarr;</button>
       </div>
     </div>
-
+ 
+    <!-- STEP 3 rental: Supply add-on -->
+    <div class="step-panel" data-step="3r">
+      <div class="toggle-card">
+        <div>
+          <h3 style="color:var(--forest); font-size:1.05rem; margin-bottom:4px;">Include supplies?</h3>
+          <p style="font-size:.9rem; opacity:.8; margin:0;">Hot dogs, buns, ketchup &amp; mustard delivered with the cart, for an additional price.</p>
+        </div>
+        <div class="switch" id="suppliesSwitch" onclick="toggleSupplies()"><div class="knob"></div></div>
+      </div>
+      <p style="font-size:.85rem; opacity:.75;">Cart-only rental includes the cart, propane, and basic setup. Bringing your own hot dogs, buns, and condiments keeps cost down; letting us supply everything is simpler day-of.</p>
+      <div class="nav-row">
+        <button class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(2)">&larr; Back</button>
+        <button class="btn btn-forest" style="border:none; cursor:pointer;" onclick="goToStep(4)">Next: Review &rarr;</button>
+      </div>
+    </div>
+ 
     <!-- STEP 4: Review + submit -->
     <div class="step-panel" data-step="4">
       <div class="summary-card" id="summaryCard"></div>
-
+      <div class="quote-note" id="quoteNote" style="display:none;">Self-serve rental pricing depends on rental length and whether you'd like supplies included — we'll follow up with an exact quote after you submit this request.</div>
+ 
       <form id="bookingForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:26px;">
+        <input type="hidden" name="mode" id="hidMode">
         <input type="hidden" name="event_date" id="hidDate">
         <input type="hidden" name="event_type" id="hidType">
         <input type="hidden" name="location" id="hidLocation">
@@ -187,7 +240,10 @@
         <input type="hidden" name="pigs" id="hidPigs">
         <input type="hidden" name="total" id="hidTotal">
         <input type="hidden" name="deposit" id="hidDeposit">
-
+        <input type="hidden" name="dropoff" id="hidDropoff">
+        <input type="hidden" name="pickup" id="hidPickup">
+        <input type="hidden" name="supplies" id="hidSupplies">
+ 
         <div class="field">
           <label>Your name</label>
           <input type="text" name="name" required>
@@ -200,18 +256,18 @@
           <label>Phone</label>
           <input type="tel" name="phone" required>
         </div>
-
+ 
         <div class="nav-row">
-          <button type="button" class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(3)">&larr; Back</button>
+          <button type="button" class="btn btn-outline" style="cursor:pointer;" onclick="goBackFromReview()">&larr; Back</button>
           <button type="submit" class="btn btn-forest" style="border:none; cursor:pointer;">Submit Booking Request</button>
         </div>
       </form>
       <p style="font-size:.82rem; opacity:.7; margin-top:14px;">This reserves your request, not your date — we'll follow up to confirm availability and send a deposit link.</p>
     </div>
-
+ 
   </div>
 </section>
-
+ 
 <footer class="site-footer">
   <div class="container footer-grid">
     <div>
@@ -235,48 +291,108 @@
   </div>
   <div class="container footer-bottom">&copy; 2026 The Canopy Club LLC. All rights reserved.</div>
 </footer>
-
+ 
 <script>
 const PACKAGES = {
   pigout: { name: "The Pig Out", price: 22, rule: "classic-3" },
   loaded: { name: "The Loaded Dog", price: 26, rule: "mixed-2-2" },
   topdog: { name: "The Top Dog", price: 30, rule: "any-5" }
 };
-
-let state = { guests: 10, pkg: null, pigs: [] };
-
+ 
+const FLOWS = {
+  full:   [ {n:1,label:'Mode'}, {n:2,label:'Event'}, {n:'3a',label:'Package'}, {n:'3b',label:'Pigs'}, {n:4,label:'Review'} ],
+  rental: [ {n:1,label:'Mode'}, {n:2,label:'Details'}, {n:'3r',label:'Supplies'}, {n:4,label:'Review'} ]
+};
+ 
+let state = { mode: null, guests: 10, pkg: null, pigs: [], dropoff: null, pickup: null, supplies: false };
+ 
+function renderTrack(){
+  const flow = FLOWS[state.mode] || FLOWS.full;
+  const track = document.getElementById('stepTrack');
+  track.innerHTML = flow.map((s, i) => `
+    <div class="step-dot" data-step-dot="${s.n}">
+      <div class="circle">${i+1}</div>
+      <span class="label">${s.label}</span>
+    </div>
+  `).join('');
+}
+ 
 function goToStep(n){
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
   document.querySelector('[data-step="'+n+'"]').classList.add('active');
+ 
+  const flow = FLOWS[state.mode] || FLOWS.full;
+  const idx = flow.findIndex(s => s.n == n);
   document.querySelectorAll('.step-dot').forEach(d => {
-    const s = parseInt(d.dataset.stepDot);
-    d.classList.toggle('active', s === n);
-    d.classList.toggle('done', s < n);
+    const dFlowIdx = flow.findIndex(s => s.n == d.dataset.stepDot);
+    d.classList.toggle('active', dFlowIdx === idx);
+    d.classList.toggle('done', dFlowIdx > -1 && dFlowIdx < idx);
   });
+ 
   if(n === 4) renderSummary();
   window.scrollTo({top: document.querySelector('.booker').offsetTop - 40, behavior:'smooth'});
 }
-
+ 
+function selectMode(mode){
+  state.mode = mode;
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.toggle('selected', c.dataset.mode === mode));
+  document.getElementById('toStep2').disabled = false;
+  renderTrack();
+ 
+  const isRental = mode === 'rental';
+  document.getElementById('rentalTimingFields').style.display = isRental ? 'block' : 'none';
+  document.getElementById('rentalPickupFields').style.display = isRental ? 'block' : 'none';
+  document.getElementById('eventDateLabel').textContent = isRental ? 'Event date' : 'Event date';
+  document.getElementById('guestLabel').innerHTML = isRental
+    ? 'Estimated guest count <span style="font-weight:400; opacity:.7;">(helps us size the propane/setup)</span>'
+    : 'Guest count <span style="font-weight:400; opacity:.7;">(10 minimum)</span>';
+}
+ 
+function handleStep2Next(){
+  if(state.mode === 'rental'){
+    goToStep('3r');
+  } else {
+    goToStep('3a');
+  }
+}
+ 
+function goBackFromReview(){
+  if(state.mode === 'rental') goToStep('3r');
+  else goToStep('3b');
+}
+ 
+function selectRadio(el, field){
+  const group = el.parentElement;
+  group.querySelectorAll('.radio-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  state[field] = el.dataset.value;
+}
+ 
+function toggleSupplies(){
+  state.supplies = !state.supplies;
+  document.getElementById('suppliesSwitch').classList.toggle('on', state.supplies);
+}
+ 
 function changeGuests(delta){
   state.guests = Math.max(10, state.guests + delta);
   document.getElementById('guestCount').textContent = state.guests;
 }
-
+ 
 function selectPackage(key){
   state.pkg = key;
   state.pigs = [];
   document.querySelectorAll('.pkg-card').forEach(c => c.classList.toggle('selected', c.dataset.pkg === key));
-  document.getElementById('toStep3').disabled = false;
+  document.getElementById('toStep3b').disabled = false;
   document.querySelectorAll('.pig-option').forEach(o => o.classList.remove('picked'));
 }
-
+ 
 function togglePig(el){
   const name = el.dataset.name;
   const type = el.dataset.pig;
   const idx = state.pigs.findIndex(p => p.name === name);
   const rule = PACKAGES[state.pkg].rule;
   const maxTotal = rule === 'classic-3' ? 3 : (rule === 'mixed-2-2' ? 4 : 5);
-
+ 
   if(idx > -1){
     state.pigs.splice(idx, 1);
     el.classList.remove('picked');
@@ -294,13 +410,13 @@ function togglePig(el){
   }
   updatePickStatus();
 }
-
+ 
 function flashStatus(msg, warn){
   const el = document.getElementById('pickStatus');
   el.textContent = msg;
   el.classList.toggle('warn', !!warn);
 }
-
+ 
 function updatePickStatus(){
   const rule = PACKAGES[state.pkg].rule;
   const need = rule === 'classic-3' ? 3 : (rule === 'mixed-2-2' ? 4 : 5);
@@ -312,45 +428,85 @@ function updatePickStatus(){
     flashStatus((need - has) + " more pig" + (need - has === 1 ? '' : 's') + " to pick.", false);
   }
 }
-
+ 
 function renderSummary(){
-  const pkg = PACKAGES[state.pkg];
-  const total = pkg.price * state.guests;
-  const deposit = Math.round(total * 0.3);
   const date = document.getElementById('eventDate').value || '—';
   const type = document.getElementById('eventType').value;
   const loc = document.getElementById('eventLocation').value || '—';
-  const pigList = state.pigs.map(p => p.name).join(', ');
-
-  document.getElementById('summaryCard').innerHTML = `
-    <div class="summary-row"><span>Date</span><span>${date}</span></div>
-    <div class="summary-row"><span>Event type</span><span>${type}</span></div>
-    <div class="summary-row"><span>Location</span><span>${loc}</span></div>
-    <div class="summary-row"><span>Guests</span><span>${state.guests}</span></div>
-    <div class="summary-row"><span>Package</span><span>${pkg.name}</span></div>
-    <div class="summary-row"><span>Your pigs</span><span style="text-align:right; max-width:60%;">${pigList}</span></div>
-    <div class="summary-row total"><span>Estimated total</span><span>$${total.toLocaleString()}</span></div>
-    <div class="summary-row"><span>Deposit due to reserve (30%)</span><span>$${deposit.toLocaleString()}</span></div>
-  `;
-
+ 
+  document.getElementById('hidMode').value = state.mode === 'rental' ? 'Self-Serve Rental' : 'Full Service';
   document.getElementById('hidDate').value = date;
   document.getElementById('hidType').value = type;
   document.getElementById('hidLocation').value = loc;
   document.getElementById('hidGuests').value = state.guests;
-  document.getElementById('hidPackage').value = pkg.name;
-  document.getElementById('hidPigs').value = pigList;
-  document.getElementById('hidTotal').value = '$' + total.toLocaleString();
-  document.getElementById('hidDeposit').value = '$' + deposit.toLocaleString();
+ 
+  if(state.mode === 'rental'){
+    const dropoffLabel = state.dropoff === 'day-before' ? 'Day Before Event' : (state.dropoff === 'morning-of' ? 'Morning Of Event' : '—');
+    const pickupLabel = state.pickup === 'that-night' ? 'That Night' : (state.pickup === 'next-day' ? 'Next Day' : '—');
+ 
+    document.getElementById('hidDropoff').value = dropoffLabel;
+    document.getElementById('hidPickup').value = pickupLabel;
+    document.getElementById('hidSupplies').value = state.supplies ? 'Yes' : 'No';
+    document.getElementById('hidPackage').value = '';
+    document.getElementById('hidPigs').value = '';
+    document.getElementById('hidTotal').value = 'Quote pending';
+    document.getElementById('hidDeposit').value = 'Quote pending';
+ 
+    document.getElementById('quoteNote').style.display = 'block';
+    document.getElementById('summaryCard').innerHTML = `
+      <div class="summary-row"><span>Booking type</span><span>Self-Serve Rental</span></div>
+      <div class="summary-row"><span>Date</span><span>${date}</span></div>
+      <div class="summary-row"><span>Event type</span><span>${type}</span></div>
+      <div class="summary-row"><span>Location</span><span>${loc}</span></div>
+      <div class="summary-row"><span>Estimated guests</span><span>${state.guests}</span></div>
+      <div class="summary-row"><span>Drop-off</span><span>${dropoffLabel}</span></div>
+      <div class="summary-row"><span>Pickup</span><span>${pickupLabel}</span></div>
+      <div class="summary-row"><span>Supplies included</span><span>${state.supplies ? 'Yes — hot dogs, buns & condiments' : 'No — cart only'}</span></div>
+    `;
+  } else {
+    const pkg = PACKAGES[state.pkg];
+    const total = pkg.price * state.guests;
+    const deposit = Math.round(total * 0.3);
+    const pigList = state.pigs.map(p => p.name).join(', ');
+ 
+    document.getElementById('hidPackage').value = pkg.name;
+    document.getElementById('hidPigs').value = pigList;
+    document.getElementById('hidTotal').value = '$' + total.toLocaleString();
+    document.getElementById('hidDeposit').value = '$' + deposit.toLocaleString();
+    document.getElementById('hidDropoff').value = '';
+    document.getElementById('hidPickup').value = '';
+    document.getElementById('hidSupplies').value = '';
+ 
+    document.getElementById('quoteNote').style.display = 'none';
+    document.getElementById('summaryCard').innerHTML = `
+      <div class="summary-row"><span>Booking type</span><span>Full Service</span></div>
+      <div class="summary-row"><span>Date</span><span>${date}</span></div>
+      <div class="summary-row"><span>Event type</span><span>${type}</span></div>
+      <div class="summary-row"><span>Location</span><span>${loc}</span></div>
+      <div class="summary-row"><span>Guests</span><span>${state.guests}</span></div>
+      <div class="summary-row"><span>Package</span><span>${pkg.name}</span></div>
+      <div class="summary-row"><span>Your pigs</span><span style="text-align:right; max-width:60%;">${pigList}</span></div>
+      <div class="summary-row total"><span>Estimated total</span><span>$${total.toLocaleString()}</span></div>
+      <div class="summary-row"><span>Deposit due to reserve (30%)</span><span>$${deposit.toLocaleString()}</span></div>
+    `;
+  }
 }
-
+ 
 document.getElementById('bookingForm').addEventListener('submit', function(e){
-  // Formspree handles the actual submit; this just prevents moving on with an empty package/pig state.
-  if(!state.pkg || state.pigs.length === 0){
+  if(!state.mode){
+    e.preventDefault();
+    alert('Please select a booking type before submitting.');
+    return;
+  }
+  if(state.mode === 'full' && (!state.pkg || state.pigs.length === 0)){
     e.preventDefault();
     alert('Please complete package and pig selection before submitting.');
   }
 });
+ 
+renderTrack();
 </script>
-
+ 
 </body>
 </html>
+ 
