@@ -52,7 +52,7 @@
 </style>
 </head>
 <body>
- 
+
 <header class="site-header">
   <div class="container nav-row">
     <a href="index.html" class="wordmark"><img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark">The Canopy Club</a>
@@ -63,12 +63,13 @@
       <a href="membership.html">Club Key Membership</a>
       <a href="catering.html">Catering</a>
       <a href="lil-pigs.html" class="active">Lil' Pigs Cart</a>
+      <a href="login.html">Team Login</a>
       <a href="visit.html">Visit Us</a>
     </nav>
     <a href="visit.html#reserve" class="nav-cta">Visit Port Jeff</a>
   </div>
 </header>
- 
+
 <section class="hero" style="padding-bottom:60px;">
   <div class="container">
     <p class="eyebrow">Book Lil' Pigs</p>
@@ -76,17 +77,17 @@
     <p class="lede">Three steps and you're booked. A member of our team will follow up to confirm your date and collect a deposit.</p>
   </div>
 </section>
- 
+
 <section>
   <div class="container booker">
- 
+
     <div class="step-track">
       <div class="step-dot active" data-step-dot="1"><div class="circle">1</div><span class="label">Event</span></div>
       <div class="step-dot" data-step-dot="2"><div class="circle">2</div><span class="label">Package</span></div>
       <div class="step-dot" data-step-dot="3"><div class="circle">3</div><span class="label">Your Pigs</span></div>
       <div class="step-dot" data-step-dot="4"><div class="circle">4</div><span class="label">Review</span></div>
     </div>
- 
+
     <!-- STEP 1: Event details -->
     <div class="step-panel active" data-step="1">
       <div class="field">
@@ -121,7 +122,7 @@
         <button class="btn btn-forest" style="border:none; cursor:pointer;" onclick="goToStep(2)">Next: Choose a Package &rarr;</button>
       </div>
     </div>
- 
+
     <!-- STEP 2: Package -->
     <div class="step-panel" data-step="2">
       <div class="pkg-grid">
@@ -147,7 +148,7 @@
         <button class="btn btn-forest" id="toStep3" style="border:none; cursor:pointer;" onclick="goToStep(3)" disabled>Next: Pick Your Pigs &rarr;</button>
       </div>
     </div>
- 
+
     <!-- STEP 3: Pig selection -->
     <div class="step-panel" data-step="3">
       <div class="pig-grid">
@@ -172,11 +173,11 @@
         <button class="btn btn-forest" id="toStep4" style="border:none; cursor:pointer;" onclick="goToStep(4)" disabled>Next: Review &rarr;</button>
       </div>
     </div>
- 
+
     <!-- STEP 4: Review + submit -->
     <div class="step-panel" data-step="4">
       <div class="summary-card" id="summaryCard"></div>
- 
+
       <form id="bookingForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:26px;">
         <input type="hidden" name="event_date" id="hidDate">
         <input type="hidden" name="event_type" id="hidType">
@@ -186,7 +187,7 @@
         <input type="hidden" name="pigs" id="hidPigs">
         <input type="hidden" name="total" id="hidTotal">
         <input type="hidden" name="deposit" id="hidDeposit">
- 
+
         <div class="field">
           <label>Your name</label>
           <input type="text" name="name" required>
@@ -199,7 +200,7 @@
           <label>Phone</label>
           <input type="tel" name="phone" required>
         </div>
- 
+
         <div class="nav-row">
           <button type="button" class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(3)">&larr; Back</button>
           <button type="submit" class="btn btn-forest" style="border:none; cursor:pointer;">Submit Booking Request</button>
@@ -207,10 +208,10 @@
       </form>
       <p style="font-size:.82rem; opacity:.7; margin-top:14px;">This reserves your request, not your date — we'll follow up to confirm availability and send a deposit link.</p>
     </div>
- 
+
   </div>
 </section>
- 
+
 <footer class="site-footer">
   <div class="container footer-grid">
     <div>
@@ -223,6 +224,7 @@
       <a href="membership.html">Club Key Membership</a>
       <a href="catering.html">Catering</a>
       <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="login.html">Team Login</a>
       <a href="visit.html">Visit Us</a>
     </div>
     <div>
@@ -233,16 +235,16 @@
   </div>
   <div class="container footer-bottom">&copy; 2026 The Canopy Club LLC. All rights reserved.</div>
 </footer>
- 
+
 <script>
 const PACKAGES = {
   pigout: { name: "The Pig Out", price: 22, rule: "classic-3" },
   loaded: { name: "The Loaded Dog", price: 26, rule: "mixed-2-2" },
   topdog: { name: "The Top Dog", price: 30, rule: "any-5" }
 };
- 
+
 let state = { guests: 10, pkg: null, pigs: [] };
- 
+
 function goToStep(n){
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
   document.querySelector('[data-step="'+n+'"]').classList.add('active');
@@ -254,12 +256,12 @@ function goToStep(n){
   if(n === 4) renderSummary();
   window.scrollTo({top: document.querySelector('.booker').offsetTop - 40, behavior:'smooth'});
 }
- 
+
 function changeGuests(delta){
   state.guests = Math.max(10, state.guests + delta);
   document.getElementById('guestCount').textContent = state.guests;
 }
- 
+
 function selectPackage(key){
   state.pkg = key;
   state.pigs = [];
@@ -267,14 +269,14 @@ function selectPackage(key){
   document.getElementById('toStep3').disabled = false;
   document.querySelectorAll('.pig-option').forEach(o => o.classList.remove('picked'));
 }
- 
+
 function togglePig(el){
   const name = el.dataset.name;
   const type = el.dataset.pig;
   const idx = state.pigs.findIndex(p => p.name === name);
   const rule = PACKAGES[state.pkg].rule;
   const maxTotal = rule === 'classic-3' ? 3 : (rule === 'mixed-2-2' ? 4 : 5);
- 
+
   if(idx > -1){
     state.pigs.splice(idx, 1);
     el.classList.remove('picked');
@@ -292,13 +294,13 @@ function togglePig(el){
   }
   updatePickStatus();
 }
- 
+
 function flashStatus(msg, warn){
   const el = document.getElementById('pickStatus');
   el.textContent = msg;
   el.classList.toggle('warn', !!warn);
 }
- 
+
 function updatePickStatus(){
   const rule = PACKAGES[state.pkg].rule;
   const need = rule === 'classic-3' ? 3 : (rule === 'mixed-2-2' ? 4 : 5);
@@ -310,7 +312,7 @@ function updatePickStatus(){
     flashStatus((need - has) + " more pig" + (need - has === 1 ? '' : 's') + " to pick.", false);
   }
 }
- 
+
 function renderSummary(){
   const pkg = PACKAGES[state.pkg];
   const total = pkg.price * state.guests;
@@ -319,7 +321,7 @@ function renderSummary(){
   const type = document.getElementById('eventType').value;
   const loc = document.getElementById('eventLocation').value || '—';
   const pigList = state.pigs.map(p => p.name).join(', ');
- 
+
   document.getElementById('summaryCard').innerHTML = `
     <div class="summary-row"><span>Date</span><span>${date}</span></div>
     <div class="summary-row"><span>Event type</span><span>${type}</span></div>
@@ -330,7 +332,7 @@ function renderSummary(){
     <div class="summary-row total"><span>Estimated total</span><span>$${total.toLocaleString()}</span></div>
     <div class="summary-row"><span>Deposit due to reserve (30%)</span><span>$${deposit.toLocaleString()}</span></div>
   `;
- 
+
   document.getElementById('hidDate').value = date;
   document.getElementById('hidType').value = type;
   document.getElementById('hidLocation').value = loc;
@@ -340,7 +342,7 @@ function renderSummary(){
   document.getElementById('hidTotal').value = '$' + total.toLocaleString();
   document.getElementById('hidDeposit').value = '$' + deposit.toLocaleString();
 }
- 
+
 document.getElementById('bookingForm').addEventListener('submit', function(e){
   // Formspree handles the actual submit; this just prevents moving on with an empty package/pig state.
   if(!state.pkg || state.pigs.length === 0){
@@ -349,7 +351,6 @@ document.getElementById('bookingForm').addEventListener('submit', function(e){
   }
 });
 </script>
- 
+
 </body>
 </html>
- 
