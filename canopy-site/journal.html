@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Journal | The Canopy Club</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .wrap{ max-width: 720px; margin: 0 auto; padding: 50px 20px 90px; }
+  .top-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom: 26px; }
+  .top-row img{ height: 30px; }
+  .logout-link{ font-size:.82rem; font-weight:700; color: var(--forest); text-decoration:underline; cursor:pointer; }
+  h1{ font-size: 1.6rem; color: var(--forest); margin-bottom: 6px; }
+  .entry-card{ background: var(--cream-2); border-radius: 14px; padding: 26px; margin: 24px 0 40px; }
+  .field{ margin-bottom: 16px; }
+  .field label{ display:block; font-weight:700; margin-bottom:6px; font-size:.85rem; }
+  .field input, .field textarea{ width:100%; padding:11px; border:1.5px solid var(--blush-deep); border-radius:8px; font-family:var(--font-body); font-size:.95rem; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .tag-chip{ padding:7px 14px; border-radius:20px; border:1.5px solid var(--blush-deep); background:var(--cream); font-size:.82rem; font-weight:700; cursor:pointer; color:var(--charcoal); }
+  .tag-chip.selected{ background:var(--forest); border-color:var(--forest); color:var(--cream); }
+  .entry-card button{ border:none; cursor:pointer; }
+  .toast{ background: var(--forest); color: var(--cream); padding: 12px 16px; border-radius: 8px; font-size:.88rem; margin-top: 14px; display:none; }
+  .log-item{ background:var(--cream-2); border-radius:12px; padding:20px 22px; margin-bottom:16px; }
+  .log-date{ font-family:var(--font-display); color:var(--forest); font-size:1.1rem; margin-bottom:8px; }
+  .log-tags{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+  .log-tags span{ background:var(--blush); color:var(--forest-deep); font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:3px 10px; border-radius:14px; }
+  .log-line{ font-size:.92rem; margin-bottom:4px; }
+  .log-line strong{ color:var(--forest); }
+  .log-note{ font-size:.9rem; opacity:.85; margin-top:8px; font-style:italic; }
+  .filter-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+  .filter-chip{ padding:6px 12px; border-radius:16px; border:1.5px solid var(--blush-deep); background:var(--cream); font-size:.78rem; font-weight:700; cursor:pointer; }
+  .filter-chip.active{ background:var(--forest); border-color:var(--forest); color:var(--cream); }
+  .denied{ text-align:center; padding: 80px 20px; opacity:.75; }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="wrap">
+  <div class="top-row">
+    <img src="assets/logo-mark-transparent.png" alt="The Canopy Club">
+    <span class="logout-link" id="logoutBtn">Sign Out</span>
+  </div>
+  <div id="content"><div class="denied">Loading&hellip;</div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  const SUPABASE_URL = "https://geshcdgajxmhrbcvltsy.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_GgXYNtWQ8Cs_jMwbDVejWw_-EtYm32v";
+  const supa = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const content = document.getElementById('content');
+  const TAGS = ['Buildout', 'Vendors', 'Menu', 'Team', 'Money', 'Wins', 'Mistakes'];
+  let selectedTags = [];
+  let activeFilter = null;
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await supa.auth.signOut();
+    window.location.href = "login.html";
+  });
+
+  async function init(){
+    const { data: sessionData } = await supa.auth.getSession();
+    if (!sessionData.session){ window.location.href = "login.html"; return; }
+
+    const { data: profile } = await supa.from('profiles').select('role, name').eq('id', sessionData.session.user.id).single();
+    const allowed = profile && profile.role === 'Chef';
+
+    if (!allowed){
+      content.innerHTML = `<div class="denied">This journal is private.</div>`;
+      return;
+    }
+
+    renderPage();
+  }
+
+  function renderPage(){
+    content.innerHTML = `
+      <h1>Build Journal</h1>
+      <p style="opacity:.75; font-size:.92rem;">One thing you did, one problem you solved, one number that mattered. Tag it, and it's ready to mine later for the playbook or for social.</p>
+
+      <div class="entry-card">
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="entryDate">
+        </div>
+        <div class="field">
+          <label>Tags</label>
+          <div class="tag-row" id="tagRow"></div>
+        </div>
+        <div class="field">
+          <label>One thing I did today</label>
+          <input type="text" id="didText" placeholder="e.g. Signed the lease with Napoli">
+        </div>
+        <div class="field">
+          <label>One problem I solved</label>
+          <input type="text" id="problemText" placeholder="e.g. Found a backup supplier for franks after Sabrett delay">
+        </div>
+        <div class="field">
+          <label>One number that mattered</label>
+          <input type="text" id="numberText" placeholder="e.g. $70K cash at closing">
+        </div>
+        <div class="field">
+          <label>Anything else worth remembering</label>
+          <textarea id="noteText" rows="3" placeholder="Optional — longer thoughts, quotes, things that surprised you"></textarea>
+        </div>
+        <button class="btn btn-forest" onclick="saveEntry()">Save Entry</button>
+        <div class="toast" id="saveToast"></div>
+      </div>
+
+      <div class="filter-row" id="filterRow"></div>
+      <div id="logList">Loading entries&hellip;</div>
+    `;
+
+    document.getElementById('entryDate').value = new Date().toISOString().split('T')[0];
+
+    document.getElementById('tagRow').innerHTML = TAGS.map(t =>
+      `<div class="tag-chip" data-tag="${t}" onclick="toggleTag(this, '${t}')">${t}</div>`
+    ).join('');
+
+    document.getElementById('filterRow').innerHTML =
+      `<div class="filter-chip active" data-filter="all" onclick="setFilter(null, this)">All</div>` +
+      TAGS.map(t => `<div class="filter-chip" data-filter="${t}" onclick="setFilter('${t}', this)">${t}</div>`).join('');
+
+    loadEntries();
+  }
+
+  function toggleTag(el, tag){
+    const idx = selectedTags.indexOf(tag);
+    if(idx > -1){ selectedTags.splice(idx, 1); el.classList.remove('selected'); }
+    else { selectedTags.push(tag); el.classList.add('selected'); }
+  }
+
+  function setFilter(tag, el){
+    activeFilter = tag;
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    loadEntries();
+  }
+
+  async function saveEntry(){
+    const entry_date = document.getElementById('entryDate').value;
+    const did_text = document.getElementById('didText').value.trim();
+    const problem_text = document.getElementById('problemText').value.trim();
+    const number_text = document.getElementById('numberText').value.trim();
+    const note = document.getElementById('noteText').value.trim();
+
+    if(!did_text && !problem_text && !number_text && !note){
+      alert('Add at least one thing before saving.');
+      return;
+    }
+
+    const { error } = await supa.from('journal_entries').insert({
+      entry_date, tags: selectedTags, did_text, problem_text, number_text, note
+    });
+
+    const toast = document.getElementById('saveToast');
+    if(error){
+      toast.style.background = '#B4472A';
+      toast.textContent = "Something went wrong saving this entry.";
+    } else {
+      toast.style.background = 'var(--forest)';
+      toast.textContent = "Entry saved.";
+      document.getElementById('didText').value = '';
+      document.getElementById('problemText').value = '';
+      document.getElementById('numberText').value = '';
+      document.getElementById('noteText').value = '';
+      selectedTags = [];
+      document.querySelectorAll('.tag-chip').forEach(c => c.classList.remove('selected'));
+      loadEntries();
+    }
+    toast.style.display = 'block';
+  }
+
+  async function loadEntries(){
+    let query = supa.from('journal_entries').select('*').order('entry_date', { ascending: false });
+    const { data, error } = await query;
+    const list = document.getElementById('logList');
+
+    if(error || !data || data.length === 0){
+      list.innerHTML = `<p style="opacity:.7;">No entries yet — today's a good day to start.</p>`;
+      return;
+    }
+
+    const filtered = activeFilter ? data.filter(e => (e.tags || []).includes(activeFilter)) : data;
+
+    if(filtered.length === 0){
+      list.innerHTML = `<p style="opacity:.7;">No entries tagged "${activeFilter}" yet.</p>`;
+      return;
+    }
+
+    list.innerHTML = filtered.map(e => `
+      <div class="log-item">
+        <div class="log-date">${new Date(e.entry_date + 'T00:00:00').toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' })}</div>
+        <div class="log-tags">${(e.tags || []).map(t => `<span>${t}</span>`).join('')}</div>
+        ${e.did_text ? `<p class="log-line"><strong>Did:</strong> ${e.did_text}</p>` : ''}
+        ${e.problem_text ? `<p class="log-line"><strong>Solved:</strong> ${e.problem_text}</p>` : ''}
+        ${e.number_text ? `<p class="log-line"><strong>Number:</strong> ${e.number_text}</p>` : ''}
+        ${e.note ? `<p class="log-note">${e.note}</p>` : ''}
+      </div>
+    `).join('');
+  }
+
+  init();
+</script>
+
+</body>
+</html>
