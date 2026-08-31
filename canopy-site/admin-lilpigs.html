@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lil' Pigs Bookings | The Canopy Club</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .wrap{ max-width: 960px; margin: 0 auto; padding: 50px 20px 90px; }
+  .top-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom: 26px; }
+  .top-row img{ height: 30px; }
+  .logout-link{ font-size:.82rem; font-weight:700; color: var(--forest); text-decoration:underline; cursor:pointer; }
+  h1{ font-size: 1.6rem; color: var(--forest); margin-bottom: 8px; }
+  .filter-row{ display:flex; gap:8px; flex-wrap:wrap; margin: 20px 0 24px; }
+  .filter-chip{ padding:6px 14px; border-radius:16px; border:1.5px solid var(--blush-deep); background:var(--cream); font-size:.8rem; font-weight:700; cursor:pointer; }
+  .filter-chip.active{ background:var(--forest); border-color:var(--forest); color:var(--cream); }
+  .booking-card{ background:var(--cream-2); border-radius:14px; padding:22px 24px; margin-bottom:16px; }
+  .booking-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+  .booking-date{ font-family:var(--font-display); font-size:1.3rem; color:var(--forest); }
+  .mode-tag{ display:inline-block; background:var(--blush); color:var(--forest-deep); font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:3px 10px; border-radius:14px; margin-left:8px; vertical-align:middle; }
+  .status-select{ padding:7px 12px; border-radius:8px; border:1.5px solid var(--forest); font-family:var(--font-body); font-weight:700; font-size:.82rem; color:var(--forest); background:var(--cream); }
+  .booking-detail{ font-size:.9rem; margin-top:12px; line-height:1.7; }
+  .booking-detail strong{ color:var(--forest); }
+  .empty{ text-align:center; opacity:.7; padding:60px 20px; }
+  .denied{ text-align:center; padding: 80px 20px; opacity:.75; }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="wrap">
+  <div class="top-row">
+    <img src="assets/logo-mark-transparent.png" alt="The Canopy Club">
+    <span class="logout-link" id="logoutBtn">Sign Out</span>
+  </div>
+  <div id="content"><div class="denied">Loading&hellip;</div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  const SUPABASE_URL = "https://geshcdgajxmhrbcvltsy.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_GgXYNtWQ8Cs_jMwbDVejWw_-EtYm32v";
+  const supa = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const content = document.getElementById('content');
+  let activeFilter = 'all';
+  let allBookings = [];
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await supa.auth.signOut();
+    window.location.href = "login.html";
+  });
+
+  async function init(){
+    const { data: sessionData } = await supa.auth.getSession();
+    if (!sessionData.session){ window.location.href = "login.html"; return; }
+
+    const { data: profile } = await supa.from('profiles').select('role, name').eq('id', sessionData.session.user.id).single();
+    const allowed = profile && (profile.role === 'Shift Lead' || profile.role === 'Chef');
+
+    if (!allowed){
+      content.innerHTML = `<div class="denied">This page is for managers only.</div>`;
+      return;
+    }
+
+    renderPage();
+  }
+
+  function renderPage(){
+    content.innerHTML = `
+      <h1>Lil' Pigs Bookings</h1>
+      <p style="opacity:.75; font-size:.92rem;">Every booking request submitted through the site, newest first.</p>
+      <div class="filter-row" id="filterRow"></div>
+      <div id="bookingList">Loading&hellip;</div>
+    `;
+
+    const statuses = ['all', 'pending', 'confirmed', 'completed', 'canceled'];
+    document.getElementById('filterRow').innerHTML = statuses.map(s =>
+      `<div class="filter-chip ${s === 'all' ? 'active' : ''}" data-status="${s}" onclick="setFilter('${s}', this)">${s.charAt(0).toUpperCase() + s.slice(1)}</div>`
+    ).join('');
+
+    loadBookings();
+  }
+
+  function setFilter(status, el){
+    activeFilter = status;
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    renderList();
+  }
+
+  async function loadBookings(){
+    const { data, error } = await supa.from('lilpigs_bookings').select('*').order('event_date', { ascending: true });
+    if(error){
+      document.getElementById('bookingList').innerHTML = `<div class="empty">Couldn't load bookings.</div>`;
+      return;
+    }
+    allBookings = data || [];
+    renderList();
+  }
+
+  function renderList(){
+    const list = document.getElementById('bookingList');
+    const filtered = activeFilter === 'all' ? allBookings : allBookings.filter(b => b.status === activeFilter);
+
+    if(filtered.length === 0){
+      list.innerHTML = `<div class="empty">No ${activeFilter === 'all' ? '' : activeFilter} bookings yet.</div>`;
+      return;
+    }
+
+    list.innerHTML = filtered.map(b => `
+      <div class="booking-card">
+        <div class="booking-top">
+          <div>
+            <span class="booking-date">${b.event_date || 'No date'}</span>
+            <span class="mode-tag">${b.mode || '—'}</span>
+          </div>
+          <select class="status-select" onchange="updateStatus('${b.id}', this.value)">
+            <option value="pending" ${b.status === 'pending' ? 'selected' : ''}>Pending</option>
+            <option value="confirmed" ${b.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
+            <option value="completed" ${b.status === 'completed' ? 'selected' : ''}>Completed</option>
+            <option value="canceled" ${b.status === 'canceled' ? 'selected' : ''}>Canceled</option>
+          </select>
+        </div>
+        <div class="booking-detail">
+          <strong>${b.name || 'Unknown'}</strong> &middot; ${b.email || ''} ${b.phone ? '&middot; ' + b.phone : ''}<br>
+          ${b.event_type || ''} at ${b.location || '—'} &middot; ${b.guests || '?'} guests<br>
+          ${b.package ? '<strong>Package:</strong> ' + b.package + '<br>' : ''}
+          ${b.pigs ? '<strong>Pigs:</strong> ' + b.pigs + '<br>' : ''}
+          ${b.dropoff ? '<strong>Drop-off:</strong> ' + b.dropoff + ' &middot; <strong>Pickup:</strong> ' + (b.pickup || '—') + '<br>' : ''}
+          ${b.addons ? '<strong>Add-ons:</strong> ' + b.addons + '<br>' : ''}
+          <strong>Total:</strong> ${b.total || '—'} &middot; <strong>Deposit:</strong> ${b.deposit || '—'}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function updateStatus(id, status){
+    await supa.from('lilpigs_bookings').update({ status }).eq('id', id);
+    const booking = allBookings.find(b => b.id === id);
+    if(booking) booking.status = status;
+  }
+
+  init();
+</script>
+
+</body>
+</html>
