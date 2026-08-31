@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Catering | The Canopy Club</title>
+<meta name="description" content="Book Canopy Club catering — pick a package, add extras, and reserve your event date with live pricing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Caveat:wght@600;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .booker{ max-width: 720px; margin: 0 auto; }
+  .step-track{ display:flex; justify-content:space-between; margin-bottom:44px; position:relative; }
+  .step-track::before{ content:""; position:absolute; top:14px; left:0; right:0; height:2px; background:var(--blush); z-index:0; }
+  .step-dot{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .step-dot .circle{ width:30px; height:30px; border-radius:50%; background:var(--cream); border:2px solid var(--blush-deep); display:flex; align-items:center; justify-content:center; font-family:var(--font-body); font-weight:700; font-size:.85rem; color:var(--forest); }
+  .step-dot.active .circle{ background:var(--forest); border-color:var(--forest); color:var(--cream); }
+  .step-dot.done .circle{ background:var(--forest); border-color:var(--forest); color:var(--cream); }
+  .step-dot span.label{ font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; color:var(--charcoal); opacity:.7; text-align:center; }
+  .step-panel{ display:none; }
+  .step-panel.active{ display:block; }
+  .field{ margin-bottom:20px; }
+  .field label{ display:block; font-weight:700; margin-bottom:6px; font-size:.88rem; }
+  .field input, .field select{ width:100%; padding:12px; border:1.5px solid var(--blush-deep); border-radius:8px; font-family:var(--font-body); font-size:1rem; }
+  .stepper{ display:flex; align-items:center; gap:16px; }
+  .stepper button{ width:40px; height:40px; border-radius:50%; border:1.5px solid var(--forest); background:var(--cream); color:var(--forest); font-size:1.3rem; cursor:pointer; }
+  .stepper .count{ font-family:var(--font-display); font-size:1.5rem; color:var(--forest); min-width:50px; text-align:center; }
+  .pkg-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  @media (max-width:700px){ .pkg-grid{ grid-template-columns:1fr; } }
+  .pkg-card{ border:2px solid var(--cream-2); border-radius:12px; padding:22px; cursor:pointer; transition:border-color .15s, transform .15s; background:var(--cream-2); }
+  .pkg-card:hover{ transform:translateY(-3px); }
+  .pkg-card.selected{ border-color:var(--forest); background:var(--cream); box-shadow:0 10px 24px -16px rgba(36,99,54,.4); }
+  .pkg-card h3{ font-size:1.1rem; color:var(--forest); margin-bottom:4px; }
+  .pkg-card .pp{ font-family:var(--font-display); color:var(--forest); font-size:1.5rem; }
+  .pkg-card p.rule{ font-size:.85rem; opacity:.8; margin-top:6px; }
+  .toggle-card{ background:var(--cream-2); border-radius:12px; padding:20px 22px; display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:16px; }
+  .toggle-card .switch{ width:52px; height:30px; border-radius:20px; background:var(--blush-deep); position:relative; cursor:pointer; flex-shrink:0; transition:background .15s; }
+  .toggle-card .switch.on{ background:var(--forest); }
+  .toggle-card .switch .knob{ width:24px; height:24px; border-radius:50%; background:var(--cream); position:absolute; top:3px; left:3px; transition:left .15s; }
+  .toggle-card .switch.on .knob{ left:25px; }
+  .dozen-stepper{ display:flex; align-items:center; gap:10px; margin-top:10px; }
+  .dozen-stepper button{ width:30px; height:30px; border-radius:50%; border:1.5px solid var(--forest); background:var(--cream); color:var(--forest); cursor:pointer; }
+  .dozen-stepper .count{ font-weight:700; color:var(--forest); min-width:70px; text-align:center; }
+  .summary-card{ background:var(--cream-2); border-radius:12px; padding:26px; }
+  .summary-row{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--blush); font-size:.95rem; }
+  .summary-row:last-child{ border-bottom:none; }
+  .summary-row.total{ font-family:var(--font-display); font-size:1.3rem; color:var(--forest); }
+  .nav-row{ display:flex; justify-content:space-between; margin-top:32px; }
+  .nav-row button, .nav-row a{ font-family:var(--font-body); }
+  .min-warn{ font-size:.85rem; color:#B4472A; font-weight:700; margin-top:8px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="wordmark"><img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark">The Canopy Club</a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Café Menu</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html" class="active">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="login.html">Team Login</a>
+      <a href="visit.html">Visit Us</a>
+    </nav>
+    <a href="visit.html#reserve" class="nav-cta">Visit Port Jeff</a>
+  </div>
+</header>
+
+<section class="hero" style="padding-bottom:60px;">
+  <div class="container">
+    <p class="eyebrow">Book Catering</p>
+    <h1 style="max-width:640px;">Pick a package.<br>Build your event.<br>See real pricing.</h1>
+    <p class="lede">A few steps and you're booked. A member of our team will follow up to confirm your date and collect a deposit.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container booker">
+
+    <div class="step-track">
+      <div class="step-dot active" data-step-dot="1"><div class="circle">1</div><span class="label">Package</span></div>
+      <div class="step-dot" data-step-dot="2"><div class="circle">2</div><span class="label">Event</span></div>
+      <div class="step-dot" data-step-dot="3"><div class="circle">3</div><span class="label">Add-Ons</span></div>
+      <div class="step-dot" data-step-dot="4"><div class="circle">4</div><span class="label">Review</span></div>
+    </div>
+
+    <!-- STEP 1: Package -->
+    <div class="step-panel active" data-step="1">
+      <div class="pkg-grid">
+        <div class="pkg-card" data-pkg="continental" onclick="selectPackage('continental')">
+          <h3>Continental Breakfast</h3>
+          <p class="pp">$12<span style="font-size:.85rem; font-family:var(--font-body);">/flock</span></p>
+          <p class="rule">Pastries, bagels &amp; schmear, fruit, coffee &middot; min 15 guests</p>
+        </div>
+        <div class="pkg-card" data-pkg="brunch" onclick="selectPackage('brunch')">
+          <h3>Canopy Brunch Buffet</h3>
+          <p class="pp">$16<span style="font-size:.85rem; font-family:var(--font-body);">/flock</span></p>
+          <p class="rule">Eggs, bacon/sausage, potatoes, pancakes or French toast &middot; min 20 guests</p>
+        </div>
+        <div class="pkg-card" data-pkg="boxed" onclick="selectPackage('boxed')">
+          <h3>Boxed Lunches</h3>
+          <p class="pp">$13<span style="font-size:.85rem; font-family:var(--font-body);">/box</span></p>
+          <p class="rule">Turkey Club, Chicken Cutlet Club, Caesar Wrap, or French Dip</p>
+        </div>
+        <div class="pkg-card" data-pkg="buffet" onclick="selectPackage('buffet')">
+          <h3>Canopy Buffet</h3>
+          <p class="pp">$20<span style="font-size:.85rem; font-family:var(--font-body);">/flock</span></p>
+          <p class="rule">2 entrees + 2 sides + bread &middot; scales 40&ndash;300 guests</p>
+        </div>
+        <div class="pkg-card" data-pkg="plated" onclick="selectPackage('plated')">
+          <h3>Plated Dinner</h3>
+          <p class="pp">$32<span style="font-size:.85rem; font-family:var(--font-body);">/flock</span></p>
+          <p class="rule">Up to 3 entree choices, salad course &middot; recommended 40 guests and under</p>
+        </div>
+      </div>
+      <div class="nav-row">
+        <span></span>
+        <button class="btn btn-forest" id="toStep2" style="border:none; cursor:pointer;" onclick="goToStep(2)" disabled>Next &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Event details -->
+    <div class="step-panel" data-step="2">
+      <div class="field">
+        <label>Event date</label>
+        <input type="date" id="eventDate" required>
+      </div>
+      <div class="field">
+        <label>Event type</label>
+        <select id="eventType">
+          <option>Wedding</option>
+          <option>Birthday party</option>
+          <option>Corporate event</option>
+          <option>Shower</option>
+          <option>Memorial / gathering</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Location (venue or address)</label>
+        <input type="text" id="eventLocation" placeholder="e.g. Port Jefferson, NY" required>
+      </div>
+      <div class="field">
+        <label id="guestLabel">Guest count</label>
+        <div class="stepper">
+          <button type="button" onclick="changeGuests(-5)">&minus;</button>
+          <span class="count" id="guestCount">15</span>
+          <button type="button" onclick="changeGuests(5)">+</button>
+        </div>
+        <p class="min-warn" id="minWarn" style="display:none;"></p>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(1)">&larr; Back</button>
+        <button class="btn btn-forest" style="border:none; cursor:pointer;" onclick="goToStep(3)">Next: Add-Ons &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Add-ons -->
+    <div class="step-panel" data-step="3">
+      <p class="eyebrow" style="margin-bottom:14px; display:block;">Hors d'Oeuvres (priced per dozen)</p>
+      <div class="toggle-card">
+        <div>
+          <h3 style="color:var(--forest); font-size:1rem; margin-bottom:2px;">Mini Quiche</h3>
+          <p style="font-size:.85rem; opacity:.8; margin:0;">$18/dozen</p>
+          <div class="dozen-stepper" id="dozenRow-quiche" style="display:none;">
+            <button type="button" onclick="changeDozen('quiche',-1)">&minus;</button>
+            <span class="count" id="dozenCount-quiche">1</span>
+            <button type="button" onclick="changeDozen('quiche',1)">+</button>
+            <span style="font-size:.82rem; opacity:.7;">dozen</span>
+          </div>
+        </div>
+        <div class="switch" id="switch-quiche" onclick="toggleHors('quiche')"><div class="knob"></div></div>
+      </div>
+      <div class="toggle-card">
+        <div>
+          <h3 style="color:var(--forest); font-size:1rem; margin-bottom:2px;">Bacon-Wrapped Dates</h3>
+          <p style="font-size:.85rem; opacity:.8; margin:0;">$22/dozen</p>
+          <div class="dozen-stepper" id="dozenRow-dates" style="display:none;">
+            <button type="button" onclick="changeDozen('dates',-1)">&minus;</button>
+            <span class="count" id="dozenCount-dates">1</span>
+            <button type="button" onclick="changeDozen('dates',1)">+</button>
+            <span style="font-size:.82rem; opacity:.7;">dozen</span>
+          </div>
+        </div>
+        <div class="switch" id="switch-dates" onclick="toggleHors('dates')"><div class="knob"></div></div>
+      </div>
+      <div class="toggle-card">
+        <div>
+          <h3 style="color:var(--forest); font-size:1rem; margin-bottom:2px;">Deviled Eggs</h3>
+          <p style="font-size:.85rem; opacity:.8; margin:0;">$15/dozen</p>
+          <div class="dozen-stepper" id="dozenRow-eggs" style="display:none;">
+            <button type="button" onclick="changeDozen('eggs',-1)">&minus;</button>
+            <span class="count" id="dozenCount-eggs">1</span>
+            <button type="button" onclick="changeDozen('eggs',1)">+</button>
+            <span style="font-size:.82rem; opacity:.7;">dozen</span>
+          </div>
+        </div>
+        <div class="switch" id="switch-eggs" onclick="toggleHors('eggs')"><div class="knob"></div></div>
+      </div>
+      <div class="toggle-card">
+        <div>
+          <h3 style="color:var(--forest); font-size:1rem; margin-bottom:2px;">Shrimp Cocktail</h3>
+          <p style="font-size:.85rem; opacity:.8; margin:0;">$36/dozen</p>
+          <div class="dozen-stepper" id="dozenRow-shrimp" style="display:none;">
+            <button type="button" onclick="changeDozen('shrimp',-1)">&minus;</button>
+            <span class="count" id="dozenCount-shrimp">1</span>
+            <button type="button" onclick="changeDozen('shrimp',1)">+</button>
+            <span style="font-size:.82rem; opacity:.7;">dozen</span>
+          </div>
+        </div>
+        <div class="switch" id="switch-shrimp" onclick="toggleHors('shrimp')"><div class="knob"></div></div>
+      </div>
+      <div class="toggle-card">
+        <div>
+          <h3 style="color:var(--forest); font-size:1rem; margin-bottom:2px;">Cheese &amp; Charcuterie Board</h3>
+          <p style="font-size:.85rem; opacity:.8; margin:0;">$85 flat, serves ~20</p>
+        </div>
+        <div class="switch" id="switch-cheeseboard" onclick="toggleHors('cheeseboard')"><div class="knob"></div></div>
+      </div>
+
+      <p class="eyebrow" style="margin:26px 0 14px; display:block;">Other Add-Ons</p>
+      <div class="toggle-card">
+        <div>
+          <h3 style="color:var(--forest); font-size:1rem; margin-bottom:2px;">Dessert Table</h3>
+          <p style="font-size:.85rem; opacity:.8; margin:0;">+$4/flock &mdash; mini cinnamon rolls, seasonal scones, cornbread bites</p>
+        </div>
+        <div class="switch" id="switch-dessert" onclick="toggleFlat('dessert')"><div class="knob"></div></div>
+      </div>
+      <div class="toggle-card">
+        <div>
+          <h3 style="color:var(--forest); font-size:1rem; margin-bottom:2px;">Mimosa &amp; Bellini Bar</h3>
+          <p style="font-size:.85rem; opacity:.8; margin:0;">+$6/flock &mdash; brunch events, licensed venues only</p>
+        </div>
+        <div class="switch" id="switch-mimosa" onclick="toggleFlat('mimosa')"><div class="knob"></div></div>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(2)">&larr; Back</button>
+        <button class="btn btn-forest" style="border:none; cursor:pointer;" onclick="goToStep(4)">Next: Review &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Review + submit -->
+    <div class="step-panel" data-step="4">
+      <div class="summary-card" id="summaryCard"></div>
+
+      <form id="bookingForm" action="https://formspree.io/f/mrpgeeor" method="POST" style="margin-top:26px;">
+        <input type="hidden" name="package" id="hidPackage">
+        <input type="hidden" name="event_date" id="hidDate">
+        <input type="hidden" name="event_type" id="hidType">
+        <input type="hidden" name="location" id="hidLocation">
+        <input type="hidden" name="guests" id="hidGuests">
+        <input type="hidden" name="addons" id="hidAddons">
+        <input type="hidden" name="total" id="hidTotal">
+        <input type="hidden" name="deposit" id="hidDeposit">
+
+        <div class="field">
+          <label>Your name</label>
+          <input type="text" name="name" required>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="tel" name="phone" required>
+        </div>
+        <div class="field">
+          <label>Have a Club Key membership?</label>
+          <select name="club_key">
+            <option>No</option>
+            <option>Yes — apply my member discount</option>
+          </select>
+        </div>
+
+        <div class="nav-row">
+          <button type="button" class="btn btn-outline" style="cursor:pointer;" onclick="goToStep(3)">&larr; Back</button>
+          <button type="submit" class="btn btn-forest" style="border:none; cursor:pointer;">Submit Booking Request</button>
+        </div>
+      </form>
+      <p style="font-size:.82rem; opacity:.7; margin-top:14px;">This reserves your request, not your date — we'll follow up to confirm availability and send a deposit link.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="wordmark"><img src="assets/logo-mark-transparent.png" alt="" style="filter:brightness(0) invert(1); height:30px;">The Canopy Club</p>
+      <p style="opacity:.8; max-width:320px;">A Long Island hospitality group — café, wine bar, catering and pop-ups, all under one canopy.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="menu.html">Café Menu</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="login.html">Team Login</a>
+      <a href="visit.html">Visit Us</a>
+    </div>
+    <div>
+      <h4>5 Mill Creek Rd</h4>
+      <a href="visit.html">Port Jefferson, NY</a>
+      <a href="visit.html">Mon&ndash;Sun, 8am&ndash;4pm</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">&copy; 2026 The Canopy Club LLC. All rights reserved.</div>
+</footer>
+
+<script>
+const PACKAGES = {
+  continental: { name: "Continental Breakfast", price: 12, unit: 'person', min: 15 },
+  brunch:      { name: "Canopy Brunch Buffet", price: 16, unit: 'person', min: 20 },
+  boxed:       { name: "Boxed Lunches", price: 13, unit: 'box', min: 1 },
+  buffet:      { name: "Canopy Buffet", price: 20, unit: 'person', min: 40 },
+  plated:      { name: "Plated Dinner", price: 32, unit: 'person', min: 10 }
+};
+
+const HORS = {
+  quiche:  { name: "Mini Quiche", pricePerDozen: 18 },
+  dates:   { name: "Bacon-Wrapped Dates", pricePerDozen: 22 },
+  eggs:    { name: "Deviled Eggs", pricePerDozen: 15 },
+  shrimp:  { name: "Shrimp Cocktail", pricePerDozen: 36 }
+};
+
+let state = {
+  pkg: null,
+  guests: 15,
+  hors: { quiche: {on:false, dozens:1}, dates: {on:false, dozens:1}, eggs: {on:false, dozens:1}, shrimp: {on:false, dozens:1}, cheeseboard: {on:false} },
+  flat: { dessert: false, mimosa: false }
+};
+
+function goToStep(n){
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector('[data-step="'+n+'"]').classList.add('active');
+  document.querySelectorAll('.step-dot').forEach(d => {
+    const s = parseInt(d.dataset.stepDot);
+    d.classList.toggle('active', s === n);
+    d.classList.toggle('done', s < n);
+  });
+  if(n === 4) renderSummary();
+  window.scrollTo({top: document.querySelector('.booker').offsetTop - 40, behavior:'smooth'});
+}
+
+function selectPackage(key){
+  state.pkg = key;
+  document.querySelectorAll('.pkg-card').forEach(c => c.classList.toggle('selected', c.dataset.pkg === key));
+  document.getElementById('toStep2').disabled = false;
+
+  const pkg = PACKAGES[key];
+  const label = pkg.unit === 'box' ? 'Number of boxes' : 'Flock Size';
+  document.getElementById('guestLabel').textContent = label + (pkg.min > 1 ? ' (minimum ' + pkg.min + ')' : '');
+  state.guests = Math.max(state.guests, pkg.min);
+  document.getElementById('guestCount').textContent = state.guests;
+  checkMin();
+}
+
+function changeGuests(delta){
+  const min = state.pkg ? PACKAGES[state.pkg].min : 1;
+  state.guests = Math.max(min, state.guests + delta);
+  document.getElementById('guestCount').textContent = state.guests;
+  checkMin();
+}
+
+function checkMin(){
+  const warn = document.getElementById('minWarn');
+  if(!state.pkg){ warn.style.display = 'none'; return; }
+  const pkg = PACKAGES[state.pkg];
+  if(state.guests < pkg.min){
+    warn.textContent = pkg.name + ' requires a minimum of ' + pkg.min + '.';
+    warn.style.display = 'block';
+  } else {
+    warn.style.display = 'none';
+  }
+}
+
+function toggleHors(key){
+  const item = state.hors[key];
+  item.on = !item.on;
+  document.getElementById('switch-' + key).classList.toggle('on', item.on);
+  const row = document.getElementById('dozenRow-' + key);
+  if(row) row.style.display = item.on ? 'flex' : 'none';
+}
+
+function changeDozen(key, delta){
+  const item = state.hors[key];
+  item.dozens = Math.max(1, item.dozens + delta);
+  document.getElementById('dozenCount-' + key).textContent = item.dozens;
+}
+
+function toggleFlat(key){
+  state.flat[key] = !state.flat[key];
+  document.getElementById('switch-' + key).classList.toggle('on', state.flat[key]);
+}
+
+function renderSummary(){
+  const pkg = PACKAGES[state.pkg];
+  const date = document.getElementById('eventDate').value || '—';
+  const type = document.getElementById('eventType').value;
+  const loc = document.getElementById('eventLocation').value || '—';
+
+  const pkgTotal = pkg.price * state.guests;
+  let total = pkgTotal;
+  let lines = [
+    { label: pkg.unit === 'box' ? (pkg.name + ' (' + state.guests + ' boxes)') : (pkg.name + ' (flock of ' + state.guests + ')'), value: '$' + pkgTotal.toLocaleString() }
+  ];
+
+  Object.keys(HORS).forEach(key => {
+    const item = state.hors[key];
+    if(item.on){
+      const cost = HORS[key].pricePerDozen * item.dozens;
+      total += cost;
+      lines.push({ label: HORS[key].name + ' (' + item.dozens + ' dozen)', value: '$' + cost });
+    }
+  });
+  if(state.hors.cheeseboard.on){ total += 85; lines.push({ label: 'Cheese & Charcuterie Board', value: '$85' }); }
+  if(state.flat.dessert){ const c = 4 * state.guests; total += c; lines.push({ label: 'Dessert Table (flock of ' + state.guests + ')', value: '$' + c }); }
+  if(state.flat.mimosa){ const c = 6 * state.guests; total += c; lines.push({ label: 'Mimosa & Bellini Bar (flock of ' + state.guests + ')', value: '$' + c }); }
+
+  const deposit = Math.round(total * 0.3);
+  const addonSummary = [
+    ...Object.keys(HORS).filter(k => state.hors[k].on).map(k => HORS[k].name + ' x' + state.hors[k].dozens + 'dz'),
+    state.hors.cheeseboard.on ? 'Cheese Board' : null,
+    state.flat.dessert ? 'Dessert Table' : null,
+    state.flat.mimosa ? 'Mimosa Bar' : null
+  ].filter(Boolean).join(', ') || 'None';
+
+  document.getElementById('hidPackage').value = pkg.name;
+  document.getElementById('hidDate').value = date;
+  document.getElementById('hidType').value = type;
+  document.getElementById('hidLocation').value = loc;
+  document.getElementById('hidGuests').value = state.guests;
+  document.getElementById('hidAddons').value = addonSummary;
+  document.getElementById('hidTotal').value = '$' + total.toLocaleString();
+  document.getElementById('hidDeposit').value = '$' + deposit.toLocaleString();
+
+  document.getElementById('summaryCard').innerHTML = `
+    <div class="summary-row"><span>Package</span><span>${pkg.name}</span></div>
+    <div class="summary-row"><span>Date</span><span>${date}</span></div>
+    <div class="summary-row"><span>Event type</span><span>${type}</span></div>
+    <div class="summary-row"><span>Location</span><span>${loc}</span></div>
+    ${lines.map(l => `<div class="summary-row"><span>${l.label}</span><span>${l.value}</span></div>`).join('')}
+    <div class="summary-row total"><span>Estimated total</span><span>$${total.toLocaleString()}</span></div>
+    <div class="summary-row"><span>Deposit due to reserve (30%)</span><span>$${deposit.toLocaleString()}</span></div>
+  `;
+}
+
+document.getElementById('bookingForm').addEventListener('submit', function(e){
+  if(!state.pkg){
+    e.preventDefault();
+    alert('Please select a package before submitting.');
+  }
+});
+</script>
+
+</body>
+</html>
