@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Online | The Canopy Club</title>
+<meta name="description" content="Order breakfast, lunch, coffee and pastries for pickup or curbside from The Canopy Club, 5 Mill Creek Road, Port Jefferson, NY.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .order-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:820px){.order-steps{grid-template-columns:1fr}}
+  .step-num{width:38px;height:38px;border-radius:50%;background:var(--blush);color:var(--forest-deep);font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+  .order-cats{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 28px}
+  .order-cats span{background:#fff;border:1.5px solid var(--blush-deep);color:var(--forest);padding:7px 14px;border-radius:999px;font-size:.9rem;font-weight:500}
+  .order-sticky{display:none}
+  @media(max-width:760px){.order-sticky{display:block;position:fixed;left:16px;right:16px;bottom:16px;z-index:60;text-align:center;background:var(--forest);color:#fff;text-decoration:none;font-weight:700;padding:15px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+    .site-footer{padding-bottom:90px}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="wordmark"><img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark">The Canopy Club</a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="order.html" class="active">Order Online</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="visit.html">Visit Us</a>
+    </nav>
+    <a href="visit.html#reserve" class="nav-cta">Visit Port Jeff</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <p class="eyebrow">Pickup &amp; Curbside</p>
+      <h1>Order ahead. We'll have it ready.</h1>
+      <p class="lede">Breakfast, lunch, coffee and fresh pastries from 5 Mill Creek Road, Port Jefferson. Skip the line and grab it on your way.</p>
+      <a href="https://order.toasttab.com/online/the-canopy-club-5-mill-creek-rd" target="_blank" rel="noopener" class="btn btn-forest">Start Your Order</a>
+      <p style="font-size:.82rem; opacity:.75; margin-top:12px;">Secure ordering powered by Toast</p>
+    </div>
+    <img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark" class="hero-mark" style="max-width:220px;">
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2 style="color:var(--forest); font-size:1.7rem; margin-bottom:24px;">How it works</h2>
+    <div class="order-steps">
+      <div class="card"><div class="step-num">1</div><h3>Pick your favorites</h3><p>Browse the full breakfast, lunch and café menu and make it your way.</p></div>
+      <div class="card"><div class="step-num">2</div><h3>Pickup or curbside</h3><p>Grab it at the counter, or choose curbside at checkout and we'll bring it out.</p></div>
+      <div class="card"><div class="step-num">3</div><h3>Fresh &amp; ready</h3><p>Made to order and ready at the time Toast gives you at checkout.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2 style="color:var(--forest); font-size:1.7rem;">What's on the menu</h2>
+    <p>Breakfast from 6:30am &middot; Lunch from 11am</p>
+    <div class="order-cats">
+      <span>Club Specialties</span><span>Omelettes</span><span>Pancakes &amp; Waffles</span><span>Morning Handhelds</span>
+      <span>Salads</span><span>Lunch Handhelds</span><span>Plant Based</span><span>Kids Club</span>
+      <span>Coffee &amp; Lattes</span><span>Bagels</span><span>Bakery</span>
+    </div>
+    <a href="https://order.toasttab.com/online/the-canopy-club-5-mill-creek-rd" target="_blank" rel="noopener" class="btn btn-forest">See the Full Menu &amp; Order</a>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="card" style="background:var(--blush);">
+      <h3>Do you have your Club Key?</h3>
+      <p>Your daily coffee is on us, plus member pricing on lattes, event and catering discounts, and a birthday treat.</p>
+      <a href="membership.html" class="btn btn-forest">Get Your Club Key</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="wordmark"><img src="assets/logo-mark-transparent.png" alt="" style="filter:brightness(0) invert(1); height:30px;">The Canopy Club</p>
+      <p style="opacity:.8; max-width:320px;">A Long Island hospitality group — breakfast house, catering and pop-ups, all under one canopy.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="menu.html">Menu</a>
+      <a href="order.html">Order Online</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="visit.html">Visit Us</a>
+    </div>
+    <div>
+      <h4>5 Mill Creek Rd</h4>
+      <a href="visit.html">Port Jefferson, NY</a>
+      <a href="visit.html">Mon&ndash;Sun, 7am&ndash;4pm</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">&copy; 2026 The Canopy Club LLC. All rights reserved.</div>
+</footer>
+
+<a class="order-sticky" href="https://order.toasttab.com/online/the-canopy-club-5-mill-creek-rd" target="_blank" rel="noopener">Order Pickup &rarr;</a>
+
+</body>
+</html>
