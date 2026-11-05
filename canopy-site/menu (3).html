@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu | The Canopy Club</title>
+<meta name="description" content="The Canopy Club menu — breakfast served all day, lunch from 11am, specialty lattes and fresh bakery. 5 Mill Creek Rd, Port Jefferson, NY.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .menu-section{ margin-bottom: 42px; }
+  .menu-section h3{ color: var(--forest); font-size:1.3rem; border-bottom:2px solid var(--blush); padding-bottom:8px; margin-bottom:8px; }
+  .menu-section .section-sub{ font-size:.86rem; opacity:.75; margin-bottom:18px; }
+  .menu-item{ margin-bottom: 14px; }
+  .menu-item-head{ display:flex; justify-content:space-between; align-items:baseline; gap:14px; }
+  .menu-item-head strong{ font-size:1rem; color:var(--charcoal); }
+  .menu-item-head .price{ font-family:var(--font-display); color:var(--forest); font-size:1.1rem; white-space:nowrap; }
+  .menu-item p{ font-size:.9rem; color: var(--charcoal); opacity:.8; margin: 2px 0 0; }
+  .menu-note{ font-style:italic; font-size:.85rem; opacity:.75; }
+  .menu-cols{ display:grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 780px){ .menu-cols{ grid-template-columns: 1fr; } }
+  .book-header{ text-align:center; margin: 60px 0 40px; }
+  .book-header:first-child{ margin-top:0; }
+  .book-header .eyebrow{ display:block; margin-bottom:8px; }
+  .book-header h2{ font-size:2rem; color:var(--forest); }
+  .jump-nav{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+  .jump-nav a{ background:var(--cream-2); color:var(--forest); font-weight:700; font-size:.82rem; padding:8px 18px; border-radius:20px; text-decoration:none; }
+  .jump-nav a:hover{ background:var(--blush); }
+  .plant-card, .littleclub-card{ background:var(--blush-light,var(--blush)); border-radius:14px; padding:26px 28px; margin-top:10px; }
+  .plant-card .cols3, .littleclub-card .cols3{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:12px; }
+  @media (max-width:700px){ .plant-card .cols3, .littleclub-card .cols3{ grid-template-columns:1fr; } }
+  .badge-top{ display:flex; justify-content:space-between; align-items:center; }
+  .badge-top .tag{ margin:0; }
+  .diet{ display:inline-block; font-size:.68rem; font-weight:700; color:var(--forest); border:1.5px solid var(--forest); border-radius:4px; padding:0 4px; margin-left:6px; vertical-align:middle; line-height:1.4; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="wordmark"><img src="assets/logo-mark-transparent.png" alt="The Canopy Club mark">The Canopy Club</a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="menu.html" class="active">Café Menu</a>
+      <a href="order.html">Order Online</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="login.html">Team Login</a>
+      <a href="visit.html">Visit Us</a>
+    </nav>
+    <a href="visit.html#reserve" class="nav-cta">Visit Port Jeff</a>
+  </div>
+</header>
+
+<section class="hero" style="padding-bottom:60px;">
+  <div class="container">
+    <p class="eyebrow">The Canopy Club Breakfast House</p>
+    <h1 style="max-width:640px;">The Menu</h1>
+    <p class="lede">Breakfast served all day, lunch from 11am, and everything from the coffee bar &mdash; every day at 5 Mill Creek Road.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="jump-nav">
+      <a href="#breakfast">Breakfast</a>
+      <a href="#lunch">Lunch</a>
+      <a href="#coffee">Coffee &amp; Bakery</a>
+      <a href="order.html" style="background:var(--forest); color:var(--cream);">Order Online</a>
+    </div>
+    <p class="menu-note" style="text-align:center; margin-bottom:0;"><span class="diet">V</span> Vegetarian &nbsp;&middot;&nbsp; <span class="diet">GF</span> Gluten Free</p>
+
+    <!-- ======================= BREAKFAST ======================= -->
+    <div class="book-header" id="breakfast">
+      <span class="eyebrow">Served All Day</span>
+      <h2>Breakfast</h2>
+    </div>
+    <div class="menu-cols">
+      <div>
+        <div class="menu-section">
+          <h3>Club Specialties</h3>
+          <div class="menu-item"><div class="menu-item-head"><strong>Pancakes for the Table</strong></div><p>Four giant buttermilk pancakes, made to share. Serves 3&ndash;4. Add chocolate chips, blueberries, or banana walnut.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Canopy Breakfast Platter</strong></div><p>Soft scrambled eggs, hash browns, choice of bacon or sausage, choice of pancake, waffle, or French toast.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Tiramisu Tempura French Toast</strong></div><p>Crispy tempura-battered French toast, espresso mascarpone cream, cocoa powder topping.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Chicken-Stuffed Waffle</strong></div><p>Seasoned hand-pulled chicken, pineapple chutney, hot honey, maple syrup.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Lemon Blueberry Pancakes</strong></div><p>Two fluffy pancakes with lemon zest and fresh blueberry compote.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Disco Benedict</strong></div><p>Two poached eggs, crispy fried chicken, buttermilk biscuit, topped with Hollandaise sauce.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Cajun Shrimp &amp; Polenta <span class="diet">GF</span></strong></div><p>Five Cajun-spiced grilled shrimp served over creamy polenta.</p></div>
+        </div>
+        <div class="menu-section">
+          <h3>Morning Handhelds</h3>
+          <div class="menu-item"><div class="menu-item-head"><strong>The Canopy Griddle</strong></div><p>Griddle-rounded scrambled egg, American cheese, sausage patty, maple chipotle, between two maple butter pancake rounds. Served with truffle fries.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Breakfast Burrito</strong></div><p>Scrambled eggs, cheddar, hash browns, bell pepper, onion, and sausage. Served with truffle fries.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>BEC / SEC</strong></div><p>Two eggs with your choice of bacon or sausage and American cheese on a fresh Kaiser roll.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Avocado Toast</strong></div><p>Avocado, burrata, tomato, everything bagel seasoning. Add a fried egg.</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="menu-section">
+          <h3>Omelettes</h3>
+          <p class="section-sub">Served with hash browns and choice of toast: sourdough, white bread, or English muffin.</p>
+          <div class="menu-item"><div class="menu-item-head"><strong>Build Your Own</strong></div><p>Choice of 3: tomato, onion, bell pepper, spinach, turkey, ham, American, cheddar, mozzarella, crushed bacon, sausage, mushroom.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Spanish <span class="diet">GF</span></strong></div><p>Onion and potato.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Veggie <span class="diet">GF</span></strong></div><p>Spinach, onion, American, bell peppers, mushrooms, tomato.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>The Garden Bird <span class="diet">GF</span></strong></div><p>Turkey, spinach, egg whites, cheddar.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>The Hungry Man <span class="diet">GF</span></strong></div><p>Bacon, sausage, ham, American.</p></div>
+          <p class="menu-note">Additional fillings and egg-whites-only available.</p>
+        </div>
+        <div class="menu-section">
+          <h3>The Classics</h3>
+          <p class="section-sub">Served with your choice of bacon or sausage. Add two eggs, any style.</p>
+          <div class="menu-item"><div class="menu-item-head"><strong>Buttermilk Pancakes</strong></div><p>Two pancakes.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Gluten-Free Pancakes</strong></div><p>Two pancakes.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Belgian Waffle</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>French Toast</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Eggs Benedict</strong></div><p>Two poached eggs served with Canadian bacon on an English muffin, topped with Hollandaise sauce.</p></div>
+        </div>
+        <div class="menu-section">
+          <h3>Light &amp; Fresh</h3>
+          <div class="menu-item"><div class="menu-item-head"><strong>Brown Sugar Steel Cut Oatmeal <span class="diet">V</span></strong></div><p>Served with a side of toasted pecans and fresh blueberry compote.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Yogurt Parfait <span class="diet">V</span></strong></div><p>Fresh berries, granola.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Overnight Oats <span class="diet">V</span></strong></div><p>Oats, chia seeds, peanut butter, blueberry jelly.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Smoothie <span class="diet">V</span></strong></div><p>Mixed berry.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-card">
+      <div class="badge-top">
+        <p class="tag">Plant-Based</p>
+        <p class="tag" style="background:var(--forest); color:var(--cream);">Vegan</p>
+      </div>
+      <div class="cols3">
+          <div class="menu-item"><div class="menu-item-head"><strong>Veggie Burrito</strong></div><p>Hash browns, bell peppers, onion, spinach, avocado, flour tortilla.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Harvest Polenta Bowl</strong></div><p>Olive-oil polenta, squash, kale, spinach, tomato, pecans.</p></div>
+      </div>
+    </div>
+
+    <!-- ======================= LUNCH ======================= -->
+    <div class="book-header" id="lunch">
+      <span class="eyebrow">Served Daily from 11am</span>
+      <h2>Lunch</h2>
+    </div>
+    <div class="menu-cols">
+      <div>
+        <div class="menu-section">
+          <h3>Club Specialties</h3>
+          <div class="menu-item"><div class="menu-item-head"><strong>Marsala Toast</strong></div><p>Garlic sourdough toast topped with creamy marsala mushroom sauce.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Sweet Potato Gnocchi</strong></div><p>Sweet potato gnocchi tossed in a sage brown butter sauce.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Spicy Rigatoni <span class="diet">V</span></strong></div><p>Spicy vodka cream sauce. Add creamy burrata.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Whipped Ricotta <span class="diet">V</span></strong></div><p>Whipped ricotta with honey and lavender. Served with grilled sourdough.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Sweet Chili Tempura Cauliflower <span class="diet">V</span></strong></div><p>Six crispy tempura-battered cauliflower florets, tossed in a sweet Thai chili sauce and topped with sesame seeds.</p></div>
+        </div>
+        <div class="menu-section">
+          <h3>Salads</h3>
+          <div class="menu-item"><div class="menu-item-head"><strong>House <span class="diet">V</span></strong></div><p>Romaine, mixed greens, tomato, red onion, cucumber, ginger dressing.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Kale <span class="diet">V</span></strong></div><p>Candied pecans, roasted squash, cucumbers, feta, balsamic vinaigrette.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Wedge</strong></div><p>Iceberg, crumbled bacon, blue cheese, onion.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Caesar</strong></div><p>Romaine, shredded parmesan, creamy Caesar dressing, crouton crumble.</p></div>
+          <p class="menu-note">Add grilled chicken, chicken cutlet, grilled shrimp, or avocado.</p>
+        </div>
+      </div>
+      <div>
+        <div class="menu-section">
+          <h3>Handhelds</h3>
+          <p class="section-sub">Served with French fries. Upgrade to sweet potato fries, truffle fries, or a house salad.</p>
+          <div class="menu-item"><div class="menu-item-head"><strong>Smashburger</strong></div><p>Double-stacked 4 oz. smashed patties, American cheese, pickles, sautéed onions, special sauce.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Burrata BLT</strong></div><p>Creamy burrata, bacon onion jam, lettuce, tomato, pesto aioli.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Chicken Cutlet Club</strong></div><p>Crispy chicken cutlet, bacon, lettuce, tomato, chipotle mayo.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>French Dip</strong></div><p>Shaved roast beef, provolone, sautéed onions, au jus.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Chicken Caesar Wrap</strong></div><p>Grilled chicken, chopped romaine, shredded parmesan.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Bacon Jam Grilled Cheese</strong></div><p>American, cheddar, bacon jam, served with a cup of tomato soup.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="littleclub-card">
+      <div class="badge-top">
+        <p class="tag">Kids Club</p>
+        <p class="tag" style="background:var(--forest); color:var(--cream);">12 &amp; Under</p>
+      </div>
+      <div class="cols3">
+          <div class="menu-item"><div class="menu-item-head"><strong>Silver Dollar Pancakes</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>French Toast Sticks</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Yogurt &amp; Berries</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Scrambled Egg &amp; Toast</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Kids Waffle</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Cheeseburger &amp; French Fries</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Grilled Cheese &amp; French Fries</strong></div></div>
+      </div>
+      <p class="menu-note" style="margin-top:14px;">Includes a kid-sized soft drink. Add whipped cream &amp; fresh berries.</p>
+    </div>
+
+    <!-- ======================= COFFEE & BAKERY ======================= -->
+    <div class="book-header" id="coffee">
+      <span class="eyebrow">The Coffee Bar</span>
+      <h2>Coffee &amp; Bakery</h2>
+    </div>
+    <div class="menu-cols">
+      <div>
+        <div class="menu-section">
+          <h3>Coffee &amp; Espresso</h3>
+          <p class="section-sub">Hot or iced.</p>
+          <div class="menu-item"><div class="menu-item-head"><strong>Drip Coffee</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>French Press for the Table</strong></div><p>34 oz, made for sharing.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Latte</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Cappuccino</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Flat White</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Cortado</strong></div></div>
+        </div>
+        <div class="menu-section">
+          <h3>Specialty Lattes</h3>
+          <p class="section-sub">Hot or iced.</p>
+          <div class="menu-item"><div class="menu-item-head"><strong>Honey Sea Salt</strong></div><p>Honey sea salt syrup, salted caramel cold foam.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Strawberry</strong></div><p>Strawberry syrup, strawberry &amp; cream cold foam.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Toasted Coconut</strong></div><p>Coconut syrup, toasted coconut cold foam.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Raspberry Matcha Latte</strong></div><p>Raspberry jam, raspberry cold foam.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Seasonal</strong></div><p>Pumpkin spice syrup, pumpkin cold foam.</p></div>
+        </div>
+        <div class="menu-section">
+          <h3>Loose Leaf Tea</h3>
+          <p class="section-sub">From our Port Jeff neighbors.</p>
+          <div class="menu-item"><div class="menu-item-head"><strong>English Breakfast</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Green Tea</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Dragon Fruit</strong></div><p>Get it iced.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Rotating Specialty Teas</strong></div><p>Get it iced.</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="menu-section" style="background:var(--cream-2); border-radius:14px; padding:22px 24px;">
+          <h3 style="border-bottom-color:transparent; margin-bottom:14px;">Make It Yours</h3>
+          <div class="menu-item"><div class="menu-item-head"><strong>Milk</strong></div><p>Whole, oat, or almond.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Extra Shot</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>House-Made Syrups</strong></div><p>Vanilla, toasted marshmallow, toasted coconut, salted caramel, strawberry, honey sea salt, seasonal.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Cold Foams</strong></div><p>Vanilla, toasted coconut, raspberry, strawberry, salted caramel.</p></div>
+        </div>
+        <div class="menu-section" style="margin-top:32px;">
+          <h3>Bagels</h3>
+          <p class="section-sub">Fresh every morning.</p>
+          <div class="menu-item"><div class="menu-item-head"><strong>Plain &middot; Everything &middot; Cinnamon Raisin</strong></div><p>With plain cream cheese or butter.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Specialty Spreads</strong></div><p>Scallion, honey-candied walnut, gochujang, cinnamon butter.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Add Smoked Salmon</strong></div></div>
+        </div>
+        <div class="menu-section">
+          <h3>Bakery</h3>
+          <div class="menu-item"><div class="menu-item-head"><strong>Croissant</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Chocolate Croissant</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Almond Croissant</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Sourdough Cinnamon Bun</strong></div><p>Made in-house.</p></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Blueberry Lemon Muffin</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Banana Chocolate Muffin</strong></div></div>
+          <div class="menu-item"><div class="menu-item-head"><strong>Canopy Cookie</strong></div><p>Espresso cookie, tiramisu mascarpone.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-card" style="background:var(--blush);">
+      <p class="tag" style="margin-bottom:14px;">Soft Drinks</p>
+      <p style="margin:0;">Coca-Cola &middot; Diet Coke &middot; Sprite &middot; Ginger Ale &middot; Iced Tea &middot; Lemonade &middot; Orange Juice &middot; Apple Juice &middot; Cranberry Juice</p>
+    </div>
+
+    <p style="text-align:center; margin-top:50px; font-family:var(--font-display); color:var(--forest); font-size:1.3rem;">Got your Club Key? Your daily coffee is on us.<br><span style="font-family:var(--font-body); font-size:.85rem; text-transform:uppercase; letter-spacing:.1em; color:var(--charcoal);">Ask us about The Club Key.</span></p>
+    <div style="text-align:center; margin-top:28px;"><a href="order.html" class="btn btn-forest">Order Online</a></div>
+    <p style="text-align:center; margin-top:30px; font-size:.85rem; opacity:.65; max-width:760px; margin-left:auto; margin-right:auto;">Please inform your server of any food allergies or dietary restrictions before ordering. While we take precautions to prevent cross-contact, our kitchen handles common allergens, and we cannot guarantee that any item is completely free of allergens. Consuming raw or undercooked meats, poultry, seafood, shellfish, or eggs may increase your risk of foodborne illness, especially if you have certain medical conditions.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="wordmark"><img src="assets/logo-mark-transparent.png" alt="" style="filter:brightness(0) invert(1); height:30px;">The Canopy Club</p>
+      <p style="opacity:.8; max-width:320px;">A Long Island hospitality group — café, wine bar, catering and pop-ups, all under one canopy.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="menu.html">Café Menu</a>
+      <a href="order.html">Order Online</a>
+      <a href="membership.html">Club Key Membership</a>
+      <a href="catering.html">Catering</a>
+      <a href="lil-pigs.html">Lil' Pigs Cart</a>
+      <a href="login.html">Team Login</a>
+      <a href="visit.html">Visit Us</a>
+    </div>
+    <div>
+      <h4>5 Mill Creek Rd</h4>
+      <a href="visit.html">Port Jefferson, NY</a>
+      <a href="visit.html">Mon&ndash;Sun, 6:30am&ndash;3pm</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">&copy; 2026 The Canopy Club LLC. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
