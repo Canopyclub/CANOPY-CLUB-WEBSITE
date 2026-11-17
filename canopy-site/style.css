@@ -163,6 +163,8 @@ section{ padding: 100px 0; }
 .footer-grid h4{ color: var(--cream); font-size: .82rem; text-transform:uppercase; letter-spacing:.08em; font-family: var(--font-body); font-weight:700; }
 .footer-grid a{ display:block; margin-bottom:9px; opacity:.85; font-size:.92rem; }
 .footer-grid a:hover{ opacity:1; text-decoration:underline; }
+.footer-grid a.footer-ig{ display:flex; align-items:center; gap:8px; margin-top:14px; color: var(--cream); opacity:1; font-weight:700; }
+.footer-grid a.footer-ig + a.footer-ig{ margin-top:4px; }
 .footer-bottom{ border-top:1px solid rgba(255,255,255,.15); padding-top:20px; font-size:.8rem; opacity:.65; }
 @media (max-width: 780px){ .footer-grid{ grid-template-columns: 1fr; } }
 
