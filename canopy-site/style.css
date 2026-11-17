@@ -159,6 +159,7 @@ section{ padding: 100px 0; }
 .site-footer{ background: var(--forest-deep); color: var(--blush); padding: 60px 0 30px; }
 .footer-grid{ display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 36px; margin-bottom: 36px; }
 .footer-grid .wordmark{ color: var(--cream); }
+.site-footer p{ color: #fff; }
 .footer-grid h4{ color: var(--cream); font-size: .82rem; text-transform:uppercase; letter-spacing:.08em; font-family: var(--font-body); font-weight:700; }
 .footer-grid a{ display:block; margin-bottom:9px; opacity:.85; font-size:.92rem; }
 .footer-grid a:hover{ opacity:1; text-decoration:underline; }
